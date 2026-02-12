@@ -1,0 +1,47 @@
+# Data
+data_embeddings/*.npz
+data_embeddings/*.csv
+raw_data/
+*.nii
+*.nii.gz
+*.dcm
+*.wav
+*.mp3
+
+# Model checkpoints
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment
+.env
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Experiment logs
+experiment_results/
+*.log
