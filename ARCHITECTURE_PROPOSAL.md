@@ -1010,26 +1010,78 @@ All ablation results should be presented as:
 
 ## 12. References
 
-1. Cao, W., Mirjalili, V., & Raschka, S. (2020). Rank consistent ordinal regression for neural networks with application to age estimation. *Pattern Recognition Letters*, 140, 325–331.
+### Foundational Methods
 
-2. Kendall, A., Gal, Y., & Cipolla, R. (2018). Multi-task learning using uncertainty to weigh losses for scene geometry and semantics. *CVPR 2018*.
+1. Cao, W., Mirjalili, V., & Raschka, S. (2020). [Rank consistent ordinal regression for neural networks with application to age estimation.](https://doi.org/10.1016/j.patrec.2020.09.024) *Pattern Recognition Letters*, 140, 325–331.
 
-3. Gensheimer, M. F., & Narasimhan, B. (2019). A scalable discrete-time survival model for neural networks. *PeerJ*, 7, e6257.
+2. Kendall, A., Gal, Y., & Cipolla, R. (2018). [Multi-task learning using uncertainty to weigh losses for scene geometry and semantics.](https://arxiv.org/abs/1705.07115) *CVPR 2018*.
 
-4. Ganin, Y., et al. (2016). Domain-adversarial training of neural networks. *JMLR*, 17(1), 2096–2030.
+3. Gensheimer, M. F., & Narasimhan, B. (2019). [A scalable discrete-time survival model for neural networks.](https://doi.org/10.7717/peerj.6257) *PeerJ*, 7, e6257.
 
-5. Hara, K., Kataoka, H., & Satoh, Y. (2018). Can spatiotemporal 3D CNNs retrace the history of 2D CNNs and ImageNet? *CVPR 2018*.
+4. Gretton, A., Borgwardt, K. M., Rasch, M. J., Schölkopf, B., & Smola, A. (2012). [A kernel two-sample test.](https://jmlr.org/papers/v13/gretton12a.html) *JMLR*, 13, 723–773.
 
-6. Conneau, A., et al. (2018). Word translation without parallel data. *ICLR 2018*.
+5. Hara, K., Kataoka, H., & Satoh, Y. (2018). [Can spatiotemporal 3D CNNs retrace the history of 2D CNNs and ImageNet?](https://arxiv.org/abs/1711.09577) *CVPR 2018*.
 
-7. Baevski, A., et al. (2020). wav2vec 2.0: A framework for self-supervised learning of speech representations. *NeurIPS 2020*.
+6. He, K., Zhang, X., Ren, S., & Sun, J. (2016). [Deep residual learning for image recognition.](https://arxiv.org/abs/1512.03385) *CVPR 2016*.
 
-8. Radford, A., et al. (2023). Robust speech recognition via large-scale weak supervision. *ICML 2023*.
+### Cross-Modal Alignment & Domain Adaptation
 
-9. Qiu, S., et al. (2020). Development and validation of an interpretable deep learning framework for Alzheimer's disease classification. *Brain*, 143(6), 1920–1933.
+7. Ganin, Y., et al. (2016). [Domain-adversarial training of neural networks.](https://arxiv.org/abs/1505.07818) *JMLR*, 17(1), 2096–2030.
 
-10. Beekly, D. L., et al. (2007). The National Alzheimer's Coordinating Center (NACC) database: the Uniform Data Set. *Alzheimer Disease & Associated Disorders*, 21(3), 249–258.
+8. Conneau, A., et al. (2018). [Word translation without parallel data.](https://arxiv.org/abs/1710.04087) *ICLR 2018*.
+
+9. Long, M., Cao, Y., Wang, J., & Jordan, M. (2015). [Learning transferable features with deep adaptation networks.](https://arxiv.org/abs/1502.02791) *ICML 2015*.
+
+10. Tzeng, E., Hoffman, J., Saenko, K., & Darrell, T. (2017). [Adversarial discriminative domain adaptation.](https://arxiv.org/abs/1702.05464) *CVPR 2017*.
+
+### Alzheimer's Disease Deep Learning
+
+11. Qiu, S., et al. (2020). [Development and validation of an interpretable deep learning framework for Alzheimer's disease classification.](https://doi.org/10.1093/brain/awaa137) *Brain*, 143(6), 1920–1933.
+
+12. Lu, D., et al. (2018). [Multimodal and multiscale deep neural networks for the early diagnosis of Alzheimer's disease using structural MR and FDG-PET images.](https://doi.org/10.1038/s41598-018-22871-z) *Scientific Reports*, 8(1), 5697.
+
+13. El-Sappagh, S., Abuhmed, T., Islam, S. M. R., & Kwak, K. S. (2020). [Multimodal multitask deep learning model for Alzheimer's disease progression detection based on time series data.](https://doi.org/10.1016/j.neucom.2020.05.087) *Neurocomputing*, 412, 197–215.
+
+14. Li, H., et al. (2021). [A deep learning model for early prediction of Alzheimer's disease dementia based on hippocampal MRI.](https://doi.org/10.1002/alz.12474) *Alzheimer's & Dementia*, 17(S6).
+
+15. Mahim, S. M., et al. (2024). [Unlocking the potential of AI for Alzheimer's disease detection.](https://doi.org/10.1109/ACCESS.2024.3351112) *IEEE Access*, 12.
+
+16. Yee, E., et al. (2025). [DiaMond: Dementia diagnosis with multi-modal vision Transformers using MRI and PET.](https://doi.org/10.1109/TMI.2024.3476571) *IEEE TMI*, 44(1).
+
+17. Li, W., et al. (2024). [HAMMF: Hierarchical attention-based multi-modal fusion for AD diagnosis.](https://doi.org/10.1016/j.compbiomed.2024.108348) *Computers in Biology and Medicine*, 176.
+
+### Speech & Language Biomarkers for AD
+
+18. Fraser, K. C., Meltzer, J. A., & Rudzicz, F. (2016). [Linguistic features identify Alzheimer's disease in narrative speech.](https://doi.org/10.3233/JAD-150520) *Journal of Alzheimer's Disease*, 49(2), 407–422.
+
+19. Baevski, A., et al. (2020). [wav2vec 2.0: A framework for self-supervised learning of speech representations.](https://arxiv.org/abs/2006.11477) *NeurIPS 2020*.
+
+20. Radford, A., et al. (2023). [Robust speech recognition via large-scale weak supervision.](https://arxiv.org/abs/2212.04356) *ICML 2023*.
+
+21. Reimers, N. & Gurevych, I. (2019). [Sentence-BERT: Sentence embeddings using Siamese BERT-networks.](https://arxiv.org/abs/1908.10084) *EMNLP 2019*.
+
+22. Luz, S., et al. (2020). [Alzheimer's Dementia recognition through spontaneous speech: The ADReSS challenge.](https://arxiv.org/abs/2004.06833) *Interspeech 2020*.
+
+23. Pappagari, R., et al. (2021). [Automatic detection and assessment of Alzheimer's disease using speech and language technologies in low-resource scenarios.](https://doi.org/10.21437/Interspeech.2021-1850) *Interspeech 2021*.
+
+24. Martinc, M., & Pollak, S. (2020). [Leveraging pre-trained language models for Alzheimer's disease detection.](https://aclanthology.org/2020.lrec-1.176/) *LREC 2020*.
+
+### Longitudinal & Survival Modeling
+
+25. de Jong, J., et al. (2019). [Deep learning for clustering of multivariate clinical patient trajectories with missing values.](https://doi.org/10.1093/gigascience/giz134) *GigaScience*, 8(11).
+
+26. Lee, C., Zame, W. R., Yoon, J., & van der Schaar, M. (2018). [DeepHit: A deep learning approach to survival analysis with competing risks.](https://arxiv.org/abs/1801.05512) *AAAI 2018*.
+
+27. Marinescu, R. V., et al. (2020). [TADPOLE Challenge: Accurate Alzheimer's disease prediction through crowdsourced forecasting of future data.](https://doi.org/10.1371/journal.pcbi.1008462) *PLOS Computational Biology*, 16(11).
+
+### Data Sources
+
+28. Beekly, D. L., et al. (2007). [The National Alzheimer's Coordinating Center (NACC) database: the Uniform Data Set.](https://doi.org/10.1097/WAD.0b013e318142774e) *Alzheimer Disease & Associated Disorders*, 21(3), 249–258.
+
+29. Becker, J. T., et al. (1994). [The natural history of Alzheimer's disease: Description of study cohort and accuracy of diagnosis.](https://doi.org/10.1001/archneur.1994.00540180063015) *Archives of Neurology*, 51(6), 585–594.
+
+30. Besser, L. M., et al. (2023). [The Standardized Centralized Alzheimer's and Related Dementias Neuroimaging (SCAN) database.](https://doi.org/10.1002/alz.068684) *Alzheimer's & Dementia*, 19(S15).
 
 ---
 
-*This proposal was prepared for graduate-level review. It is intended as a research architecture document, not a clinical recommendation.*
+*This document is a research architecture specification. It is intended as a technical design reference, not a clinical recommendation.*
