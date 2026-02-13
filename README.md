@@ -1,127 +1,122 @@
-# Multi-Modal Ordinal Alzheimer's Research Pipeline
+# Longitudinal Multi-Task Alzheimer's Staging via Cross-Cohort Neuroimaging and Speech Biomarkers
 
-## Context
+A multi-task, longitudinal, cross-cohort predictive modeling system for Alzheimer's disease staging and progression, built on the SCAN (NACC) dataset and DementiaBank.
 
-A multi-modal ordinal regression framework that integrates MRI and speech data to predict Alzheimer's severity as a continuous latent score mapped to ordered CDR stages. Designed for free-tier Colab/Drive storage by persisting only compressed embeddings.
+## Overview
 
-**Data sources**:
-- **Primary**: NACC clinical data (approved access) — may link to volumetric 3D MRI
-- **MRI images**: Kaggle 2D MRI slice datasets (44K JPGs, 4 severity classes)
-- **Audio**: TBD (pipeline ready for ADReSS, DementiaBank, or similar)
-- **Handwriting**: Darwin UCI dataset (451 tabular features) — potential extension
+This system jointly optimizes three clinically relevant objectives:
 
-Label mapping for Kaggle/Mendeley → ordinal CDR stages:
-- NonDemented → CDR 0
-- VeryMildDemented → CDR 0.5
-- MildDemented → CDR 1
-- ModerateDemented → CDR 2+
+| Task | Method | Output |
+|------|--------|--------|
+| **Ordinal CDR severity** | CORAL ordinal regression (4 classes, 3 thresholds) | CDR stage {0, 0.5, 1.0, 2.0+} |
+| **MCI-to-AD conversion** | Discrete-time survival model (6 intervals, 36-month window) | Time-varying conversion probability |
+| **Cross-cohort alignment** | Class-conditioned MMD | Shared latent space across modalities |
 
-This gives 4 ordered classes and 3 learned thresholds (b1, b2, b3).
+### Data Sources
 
----
+| Source | Modality | Scale | Subjects |
+|--------|----------|-------|----------|
+| SCAN (NACC) | 3D T1-weighted MRI | ~29,000 scans | ~10,000 (longitudinal) |
+| DementiaBank (Pitt Corpus) | Speech recordings | ~550 recordings | ~270 |
 
-## System Architecture
-
-```
-NACC Clinical Labels ──────────────────────────┐
-MRI Data ──→ MRI CNN ──→ MRI Embedding ────────┤
-Audio Data ──→ Audio CNN ──→ Audio Embedding ──→ Fusion Model ──→ Severity Score s(x)
-                                                                    │
-                                                         Learned Thresholds b1 b2 b3
-                                                                    │
-                                                         Ordered CDR Stage Prediction
-```
+Subjects do **not** overlap between cohorts. The system uses cross-cohort alignment via shared ordinal heads and MMD to bridge representations.
 
 ---
 
-## Free Storage Strategy
+## Architecture
 
 ```
-Remote Raw Data (S3 / Kaggle / Public Host)
-    → Temporary Colab Runtime
-        → Feature Extraction Phase
-            → Compressed Embeddings Saved to Google Drive
+NACC MRI (longitudinal)                    DementiaBank (speech)
+     │                                            │
+  3D ResNet-18                              wav2vec 2.0 + SBERT
+  (per-visit encoder)                       + handcrafted features
+     │                                            │
+  Time-aware GRU                           MLP projection
+  (visit aggregation)                      (1382-D → 256-D)
+     │                                            │
+     └──────────── Shared Latent Space ───────────┘
+                          │
+          ┌───────────────┼───────────────┐
+          │               │               │
+     CORAL Ordinal   Survival Head   Amyloid Head
+     (CDR staging)   (MCI→AD risk)   (Aβ+ binary)
 ```
 
-**Storage policy**:
-- Do not store raw MRI volumes
-- Do not store raw WAV files
-- Save only `.npz` compressed embeddings using float16
-- Delete intermediate files after embedding extraction
-
-Expected storage: MRI embeddings < 100MB, Audio embeddings < 100MB.
+Multi-task losses are balanced via learned homoscedastic uncertainty weights (Kendall et al., 2018).
 
 ---
 
 ## Project Structure
 
 ```
-project/
+├── config.py                     # Central configuration
 ├── requirements.txt
-├── .gitignore
-├── config.py                    # Central hyperparameter config
-├── data_embeddings/             # Created at runtime (gitignored)
-│   └── .gitkeep
+├── ARCHITECTURE_PROPOSAL.md      # Full technical design document
+│
 ├── models/
-│   ├── __init__.py
-│   ├── mri_cnn.py               # 3D ResNet-18 + 2D ResNet-18 adapter
-│   ├── audio_cnn.py             # Log-mel spectrogram + 2D CNN
-│   ├── fusion_model.py          # Multi-modal fusion network
-│   └── ordinal_utils.py         # CORAL ordinal loss, thresholds, metrics
-├── experiments/
-│   ├── __init__.py
-│   ├── train_unimodal.py        # Train MRI-only or Audio-only
-│   ├── train_multimodal.py      # Train fused model on embeddings
-│   └── evaluation.py            # Full evaluation suite
+│   ├── mri_encoder.py            # 3D ResNet-18 (single-channel adapted)
+│   ├── temporal_module.py        # Sinusoidal time encoding + GRU
+│   ├── speech_encoder.py         # MLP on pre-extracted features
+│   ├── task_heads.py             # OrdinalHead, SurvivalHead, AmyloidHead
+│   ├── losses.py                 # CORAL, survival, amyloid, multi-task
+│   ├── alignment.py              # Class-conditioned MMD
+│   └── full_model.py             # AlzheimerMultiTaskModel (unified)
+│
+├── data/
+│   ├── label_construction.py     # CDR mapping, conversion labels, splits
+│   ├── nacc_dataset.py           # Cross-sectional + longitudinal datasets
+│   ├── speech_dataset.py         # DementiaBank feature dataset
+│   └── preprocessing.py          # Volume preprocessing, augmentation, feature extraction
+│
+├── training/
+│   ├── trainer.py                # Phase1Trainer, Phase2Trainer
+│   └── callbacks.py              # EarlyStopping, CheckpointManager
+│
+├── evaluation/
+│   ├── metrics.py                # QWK, C-index, td-AUC, Brier, ECE, etc.
+│   └── visualization.py          # Confusion matrices, survival curves, t-SNE
+│
 └── notebooks/
-    ├── 01_extract_mri_embeddings.ipynb
-    └── 02_extract_audio_embeddings.ipynb
+    ├── 01_preprocess_nacc_mri.ipynb
+    ├── 02_extract_speech_features.ipynb
+    └── 03_train_and_evaluate.ipynb
 ```
 
 ---
 
-## Models
+## Training
 
-### MRI Feature Extractor (`models/mri_cnn.py`)
-- **`MRIResNet3D`**: 3D ResNet-18 for volumetric NACC MRI data
-  - Input: (B, 1, D, H, W) grayscale volume
-  - Output: (B, embed_dim) embedding vector
-- **`MRIResNet2D`**: 2D ResNet-18 for Kaggle/Mendeley 2D slices
-  - Pretrained ImageNet weights, adapted first conv (3→1 channel)
-  - Input: (B, 1, H, W) grayscale slice
-  - Output: (B, embed_dim) embedding vector
+Training proceeds in two phases:
 
-### Audio Feature Extractor (`models/audio_cnn.py`)
-- **`AudioCNN`**: Log-mel spectrogram + 2D ResNet-18 backbone
-  - Built-in spectrogram transform (128 mel bins)
-  - Input: raw waveform or pre-computed spectrogram
-  - Output: (B, embed_dim) embedding vector
+### Phase 1: MRI Ordinal Pretraining
+- Single-task (CORAL ordinal loss only)
+- Cross-sectional (one scan per sample)
+- 30 epochs, batch 8, gradient accumulation to effective 16
+- ~9 hours on Colab T4
 
-### Fusion Model (`models/fusion_model.py`)
-- **`FusionModel`**: Early concatenation fusion
-- **`GatedFusionModel`**: Gated fusion with learnable modality weights
-- **`AttentionFusionModel`**: Cross-modal attention fusion
-- All output a single scalar severity score s(x)
+### Phase 2: Full Multi-Task
+- All losses active (ordinal + survival + alignment)
+- Longitudinal sequences (variable-length, time-aware GRU)
+- Speech batches interleaved for alignment
+- Differential learning rates (backbone 1e-4, heads 5e-4)
+- ~50 hours across 3-4 Colab Pro sessions with checkpointing
 
-### Ordinal Regression (`models/ordinal_utils.py`)
-- **CORAL ordinal loss**: Binary cross-entropy across K-1 threshold comparisons
-- **Learnable thresholds**: P(CDR ≥ k) = sigmoid(s(x) - b_k)
-- **Threshold optimization**: Post-hoc grid search on validation data
-- **Metrics**: Accuracy, QWK, MAE, Off-by-k, Expected Calibration Error
+### Compute Requirements
+- Google Colab T4 GPU (16 GB VRAM)
+- ~2.4 GB VRAM at batch 4, 128³ resolution with AMP
+- Mixed precision (fp16) throughout
+- Checkpoint-resume for multi-session training
 
 ---
 
-## Experimental Design
+## Evaluation
 
-This framework supports extensive experimentation:
-
-1. **Model comparison**: Unimodal MRI vs Unimodal Audio vs Multimodal Fusion
-2. **Architecture ablation**: CNN depth (ResNet-18 vs ResNet-34), embedding dim (128 vs 256), fusion layer sizes
-3. **Data fraction experiments**: Train on 25%, 50%, 75%, 100% — plot learning curves
-4. **Hyperparameter sweeps**: Learning rate, weight decay, dropout rate, batch size
-5. **Ordinal vs categorical**: Compare CORAL ordinal regression vs standard cross-entropy
-6. **Fusion strategies**: Early fusion (concatenation) vs gated fusion vs attention-based fusion
-7. **Evaluation rigor**: 5-fold cross-validation, statistical significance, confusion matrices, calibration plots
+| Task | Primary Metric | Additional |
+|------|---------------|------------|
+| CDR staging | QWK (Quadratic Weighted Kappa) | MAE, off-by-1, ECE, macro-F1 |
+| MCI→AD conversion | C-index | Time-dependent AUC at 12/24/36 mo, Brier score |
+| Amyloid positivity | AUROC | AUPRC, sensitivity @ 90% specificity |
+| Alignment quality | Class-conditioned MMD | t-SNE visualization |
 
 ---
 
@@ -129,25 +124,19 @@ This framework supports extensive experimentation:
 
 ```bash
 pip install -r requirements.txt
-
-# Train unimodal MRI model
-python experiments/train_unimodal.py --modality mri --data_fraction 1.0
-
-# Train unimodal Audio model
-python experiments/train_unimodal.py --modality audio --data_fraction 1.0
-
-# Train multimodal fusion model
-python experiments/train_multimodal.py --fusion_type concat
-
-# Run full evaluation suite
-python experiments/evaluation.py --experiment all
 ```
+
+Run notebooks in order:
+1. `01_preprocess_nacc_mri.ipynb` — Build manifest CSV from NACC data
+2. `02_extract_speech_features.ipynb` — Extract speech biomarkers
+3. `03_train_and_evaluate.ipynb` — Train and evaluate (includes synthetic sanity check)
 
 ---
 
-## Resource Requirements
+## Key Design Decisions
 
-- Google Colab GPU runtime
-- Google Drive (15GB free storage)
-- Python 3.8+ with PyTorch, torchaudio, torchvision, scikit-learn
-- Compressed `.npz` embedding storage
+- **Cross-cohort modeling**: MRI and speech datasets don't share subjects. Alignment via shared CORAL head + class-conditioned MMD.
+- **Ordinal regression**: CORAL preserves CDR ordering; misclassifying CDR 0 as CDR 2 is penalized more than CDR 0 as CDR 0.5.
+- **Discrete-time survival**: Handles right-censored subjects natively. More informative than binary 36-month conversion.
+- **Uncertainty-weighted losses**: Learned task weights prevent noisy tasks from destabilizing training.
+- **SCAN advantage**: Centralized QC pipeline eliminates site-harmonization confounds present in ADNI/OASIS studies.
