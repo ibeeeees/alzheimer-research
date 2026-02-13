@@ -457,7 +457,7 @@ See [ARCHITECTURE_PROPOSAL.md](ARCHITECTURE_PROPOSAL.md) for the complete refere
 @software{ali2025longitudinal,
   title={Longitudinal Multi-Task Alzheimer's Staging via Cross-Cohort Neuroimaging and Speech Biomarkers},
   year={2025},
-  url={https://github.com/your-repo/neurovox}
+  url={https://github.com/ibeeeees/alzheimer-research}
 }
 ```
 
