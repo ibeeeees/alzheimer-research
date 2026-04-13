@@ -1,163 +1,122 @@
-"""Central configuration for the longitudinal multi-task Alzheimer's system."""
+"""
+config.py — All hyperparameters and settings in one place.
 
-from dataclasses import dataclass, field
-from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+Change values here to control every aspect of the pipeline:
+data processing, model architecture, training, and experiments.
+"""
 
 
-@dataclass
-class Config:
-    """Full system configuration.
+# =============================================================================
+# DATA SETTINGS
+# =============================================================================
 
-    Covers MRI encoder, speech encoder, temporal module, multi-task heads,
-    cross-cohort alignment, and training hyperparameters.
-    """
+# Path to the Kaggle "Movement Disorders Voice" dataset.
+# Expected structure after download:
+#   DATA_DIR/
+#   ├── alzheimer/   ← Alzheimer's audio files (.wav)
+#   └── healthy/     ← Healthy control audio files (.wav)
+#
+# Download from: https://www.kaggle.com/datasets/cycoool29/movement-disorders-voice
+# Only the "alzheimer" and "healthy" folders are used.
+DATA_DIR = "./data_raw"
 
-    # ── Paths ───────────────────────────────────────────────────────────
-    project_root: Path = Path(__file__).parent
-    data_dir: Path = Path(__file__).parent / "data_raw"
-    embedding_dir: Path = Path(__file__).parent / "data_embeddings"
-    checkpoint_dir: Path = Path(__file__).parent / "checkpoints"
-    results_dir: Path = Path(__file__).parent / "experiment_results"
+# Audio settings
+SAMPLE_RATE = 16000          # Resample all audio to 16 kHz
+MAX_AUDIO_LENGTH_SEC = 10.0  # Truncate/pad audio to this length
+CHUNK_LENGTH_SEC = 5.0       # Length of each chunk when splitting long audio
+CHUNK_OVERLAP_SEC = 1.0      # Overlap between consecutive chunks
 
-    # NACC-specific paths (set before use)
-    nacc_mri_dir: Optional[Path] = None       # directory of .nii.gz volumes
-    nacc_csv_path: Optional[Path] = None       # UDS longitudinal CSV
-    dementiabank_dir: Optional[Path] = None    # Pitt Corpus root
+# Spectrogram settings
+N_MELS = 128                 # Number of Mel filter banks
+N_FFT = 1024                 # FFT window size
+HOP_LENGTH = 512             # Hop length for STFT
+N_MFCC = 40                  # Number of MFCC coefficients
 
-    # ── CDR label mapping ───────────────────────────────────────────────
-    class_names: Tuple[str, ...] = (
-        "NonDemented", "VeryMildDemented", "MildDemented", "ModerateDemented"
-    )
-    cdr_values: Tuple[float, ...] = (0.0, 0.5, 1.0, 2.0)
-    num_classes: int = 4
-    num_thresholds: int = 3  # K - 1
+# Feature type: one of "mfcc", "mel", "logmel"
+FEATURE_TYPE = "logmel"
 
-    # ── MRI encoder ─────────────────────────────────────────────────────
-    mri_volume_shape: Tuple[int, int, int] = (128, 128, 128)  # D, H, W
-    mri_embed_dim: int = 256
-    mri_backbone: str = "r3d_18"       # 3D ResNet-18
-    mri_pretrained: bool = True
-    mri_dropout: float = 0.1
+# Voice Activity Detection (silence removal)
+USE_VAD = False              # Set True to remove silence before feature extraction
+VAD_AGGRESSIVENESS = 2       # 0 (least aggressive) to 3 (most aggressive)
 
-    # ── Temporal module (longitudinal GRU) ──────────────────────────────
-    time_encoding_dim: int = 64
-    gru_hidden_dim: int = 256
-    gru_num_layers: int = 1
-    gru_dropout: float = 0.0   # only used when num_layers > 1
 
-    # ── Speech encoder ──────────────────────────────────────────────────
-    acoustic_handcrafted_dim: int = 216    # eGeMAPS summary stats
-    wav2vec_embed_dim: int = 768           # wav2vec2-base output
-    linguistic_handcrafted_dim: int = 14   # lexical/syntactic features
-    sentbert_embed_dim: int = 384          # all-MiniLM-L6-v2
-    speech_embed_dim: int = 256
-    speech_hidden_dim: int = 512
-    speech_dropout: float = 0.3
+# =============================================================================
+# MODEL SETTINGS
+# =============================================================================
 
-    # ── Task heads ──────────────────────────────────────────────────────
-    # Ordinal CDR
-    ordinal_hidden_dim: int = 128
-    ordinal_dropout: float = 0.2
+# Which model to train: "cnn", "rnn", "svm", "logreg"
+MODEL_TYPE = "cnn"
 
-    # Survival (MCI→AD conversion)
-    survival_hidden_dim: int = 128
-    survival_dropout: float = 0.2
-    survival_num_intervals: int = 6        # 6 × 6-month intervals = 36 months
-    survival_interval_months: int = 6
+# CNN architecture: "small", "medium", or "large"
+CNN_ARCHITECTURE = "medium"
 
-    # Amyloid positivity (optional auxiliary)
-    amyloid_hidden_dim: int = 64
-    amyloid_dropout: float = 0.2
+# Architecture-specific settings (used by cnn.py)
+CNN_CONFIGS = {
+    "small": {
+        "conv_channels": [16, 32],           # 2 conv layers
+        "kernel_size": 3,
+        "pool_size": 2,
+        "fc_size": 64,
+        "dropout": 0.3,
+    },
+    "medium": {
+        "conv_channels": [32, 64, 128],      # 3 conv layers
+        "kernel_size": 3,
+        "pool_size": 2,
+        "fc_size": 128,
+        "dropout": 0.4,
+    },
+    "large": {
+        "conv_channels": [32, 64, 128, 256], # 4 conv layers
+        "kernel_size": 3,
+        "pool_size": 2,
+        "fc_size": 256,
+        "dropout": 0.5,
+    },
+}
 
-    # ── Cross-cohort alignment ──────────────────────────────────────────
-    alignment_lambda: float = 0.1          # fixed weight for MMD loss
-    mmd_kernel_bandwidth: str = "median"   # "median" heuristic or float
-    alignment_warmup_epochs: int = 5       # linearly warm λ from 0
+# RNN settings
+RNN_HIDDEN_SIZE = 128        # Hidden state size for GRU layers
+RNN_NUM_LAYERS = 2           # Number of stacked GRU layers
+RNN_DROPOUT = 0.3            # Dropout between GRU layers
+RNN_FC_SIZE = 64             # Fully connected layer size after GRU
+RNN_BIDIRECTIONAL = True     # Use bidirectional GRU
 
-    # ── Multi-task loss weighting ───────────────────────────────────────
-    # Homoscedastic uncertainty (Kendall et al. 2018)
-    # s_t = log(σ_t²), initialized to 0 → σ²=1 → weight=0.5
-    init_log_var_ord: float = 0.0
-    init_log_var_surv: float = 0.0
-    init_log_var_amy: float = 0.0
+# SVM settings
+SVM_KERNEL = "rbf"           # Kernel type: "rbf", "linear", "poly"
+SVM_C = 1.0                  # Regularization parameter
+SVM_GAMMA = "scale"          # Kernel coefficient
 
-    # ── Training: Phase 1 (MRI pretrain, ordinal only) ──────────────────
-    phase1_epochs: int = 30
-    phase1_batch_size: int = 8
-    phase1_grad_accum_steps: int = 2       # effective batch = 16
-    phase1_lr: float = 3e-4
-    phase1_min_lr: float = 1e-6
-    phase1_weight_decay: float = 1e-4
-    phase1_warmup_frac: float = 0.05       # 5% of steps
-    phase1_patience: int = 7
+# Logistic Regression settings
+LOGREG_C = 1.0               # Inverse regularization strength
+LOGREG_MAX_ITER = 1000       # Maximum iterations for solver
 
-    # ── Training: Phase 2 (multi-task + longitudinal + alignment) ───────
-    phase2_epochs: int = 40
-    phase2_mri_batch_size: int = 4         # sequences (variable-length)
-    phase2_speech_batch_size: int = 16
-    phase2_grad_accum_steps: int = 1
-    phase2_lr_backbone: float = 1e-4
-    phase2_lr_heads: float = 5e-4
-    phase2_min_lr: float = 1e-6
-    phase2_weight_decay: float = 1e-4
-    phase2_warmup_frac: float = 0.05
-    phase2_patience: int = 10
 
-    # ── General training ────────────────────────────────────────────────
-    seed: int = 42
-    num_workers: int = 2
-    pin_memory: bool = True
-    use_amp: bool = True                   # mixed-precision training
+# =============================================================================
+# TRAINING SETTINGS
+# =============================================================================
 
-    # ── Data splits ─────────────────────────────────────────────────────
-    train_frac: float = 0.70
-    val_frac: float = 0.15
-    test_frac: float = 0.15
-    n_folds_speech: int = 5                # k-fold for small DementiaBank
+BATCH_SIZE = 16
+LEARNING_RATE = 1e-3
+NUM_EPOCHS = 15
+WEIGHT_DECAY = 1e-4          # L2 regularization
 
-    # ── Data augmentation (MRI) ─────────────────────────────────────────
-    aug_rotation_degrees: float = 10.0
-    aug_scale_range: Tuple[float, float] = (0.95, 1.05)
-    aug_translate_voxels: int = 5
-    aug_intensity_shift: float = 0.1
-    aug_intensity_scale: Tuple[float, float] = (0.9, 1.1)
-    aug_noise_std: float = 0.02
-    aug_flip_prob: float = 0.5
+# Train/validation/test split ratios
+TRAIN_RATIO = 0.7
+VAL_RATIO = 0.15
+TEST_RATIO = 0.15
 
-    # ── Experiment tracking ─────────────────────────────────────────────
-    data_fractions: List[float] = field(
-        default_factory=lambda: [0.10, 0.25, 0.50, 0.75, 1.0]
-    )
-    embedding_dtype: str = "float16"
+# Random seed for reproducibility
+SEED = 42
 
-    # ── Conversion label ────────────────────────────────────────────────
-    conversion_window_months: int = 36
-    mci_cdr_value: float = 0.5
-    ad_cdr_threshold: float = 1.0
+# Device: "auto" means use GPU if available, else CPU
+DEVICE = "auto"
 
-    @property
-    def speech_input_dim(self) -> int:
-        """Total dimensionality of concatenated speech features."""
-        return (
-            self.acoustic_handcrafted_dim
-            + self.wav2vec_embed_dim
-            + self.linguistic_handcrafted_dim
-            + self.sentbert_embed_dim
-        )
 
-    @property
-    def embed_dim(self) -> int:
-        """Unified embedding dim (must match across encoders)."""
-        assert self.mri_embed_dim == self.speech_embed_dim
-        return self.mri_embed_dim
+# =============================================================================
+# OUTPUT SETTINGS
+# =============================================================================
 
-    def ensure_dirs(self):
-        """Create output directories."""
-        for d in (
-            self.data_dir,
-            self.embedding_dir,
-            self.checkpoint_dir,
-            self.results_dir,
-        ):
-            d.mkdir(parents=True, exist_ok=True)
+# Where to save trained models and results
+CHECKPOINT_DIR = "./checkpoints"
+RESULTS_DIR = "./results"
