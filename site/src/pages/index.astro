@@ -1,0 +1,2881 @@
+------------
+
+import Base from "../layouts/Base.astro";
+
+---import Base from "../layouts/Base.astro";
+
+
+
+<Base title="Alzheimer's Detection from Speech">---import Base from "../layouts/Base.astro";
+
+
+
+  <nav>
+
+    <div class="nav-inner">
+
+      <span class="nav-title">AD Speech Detection</span><Base title="Alzheimer's Detection from Speech — Research Project">------
+
+      <div class="nav-links">
+
+        <a href="#problem">Problem</a>
+
+        <a href="#method">Method</a>
+
+        <a href="#models">Models</a>  <!-- NAV -->
+
+        <a href="#results">Results</a>
+
+        <a href="#team">Team</a>  <nav>
+
+      </div>
+
+    </div>    <div class="nav-inner"><Base title="Alzheimer's Detection from Speech — Project Presentation"><html lang="en">
+
+  </nav>
+
+      <span class="nav-title">AD Speech Detection</span>
+
+  <header class="hero">
+
+    <div class="container">      <div class="nav-links">	<head>
+
+      <p class="label">Machine Learning Research Project</p>
+
+      <h1>Alzheimer&#39;s Disease Detection<br />from Speech Audio</h1>        <a href="#problem">Problem</a>
+
+      <p class="subtitle">
+
+        Comparing CNN, RNN, SVM, and Logistic Regression on spectrogram        <a href="#method">Method</a><!-- ===== NAV ===== -->		<meta charset="utf-8" />
+
+        representations of speech to classify Alzheimer&#39;s disease &mdash; and
+
+        learning that more parameters don&#39;t always mean better performance.        <a href="#models">Models</a>
+
+      </p>
+
+      <div class="hero-meta">        <a href="#results">Results</a><nav>		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+        <span>Ibe Mohammed Ali</span>
+
+        <span class="dot">&middot;</span>        <a href="#team">Team</a>
+
+        <span>Kubra Sag</span>
+
+        <span class="dot">&middot;</span>      </div>  <div class="nav-inner">		<link rel="icon" href="/favicon.ico" />
+
+        <span>Poorav Rawat</span>
+
+      </div>    </div>
+
+      <div class="hero-links">
+
+        <a href="https://github.com/ibeeeees/alzheimer-research" class="btn" target="_blank" rel="noopener">GitHub Repository &#8599;</a>  </nav>    <span class="nav-logo">AD <span class="accent">Speech</span></span>		<meta name="viewport" content="width=device-width" />
+
+        <a href="#results" class="btn btn-ghost">View Results &#8595;</a>
+
+      </div>
+
+    </div>
+
+  </header>  <!-- HERO -->    <div class="nav-links">		<meta name="generator" content={Astro.generator} />
+
+
+
+  <main>  <header class="hero">
+
+
+
+    <section id="problem" class="container">    <div class="container">      <a href="#motivation">Motivation</a>		<title>Astro</title>
+
+      <p class="section-label">Background</p>
+
+      <h2>Why speech?</h2>      <p class="label">Machine Learning Research Project</p>
+
+      <p>
+
+        Clinical diagnosis of Alzheimer&#39;s disease relies on costly cognitive      <h1>Alzheimer's Disease Detection<br/>from Speech Audio</h1>      <a href="#data">Data</a>	</head>
+
+        assessments, neuroimaging, and biomarker analysis. But Alzheimer&#39;s-related
+
+        cognitive decline produces <strong>measurable changes in how people speak</strong>:      <p class="subtitle">
+
+        longer pauses, reduced vocabulary, altered prosody, and less coherent descriptions.
+
+      </p>        Comparing CNN, RNN, SVM, and Logistic Regression on spectrogram      <a href="#methods">Methods</a>	<body>
+
+      <p>
+
+        Speech is <strong>non-invasive, low-cost, and easy to collect</strong>. If a        representations of speech to classify Alzheimer's disease — and learning
+
+        model can reliably detect Alzheimer&#39;s from a short audio clip, it could
+
+        enable earlier screening in primary care settings &mdash; before expensive tests        that more parameters don't always mean better performance.      <a href="#results">Results</a>		<h1>Astro</h1>
+
+        are ordered.
+
+      </p>      </p>
+
+
+
+      <div class="card-row">      <div class="hero-meta">      <a href="#findings">Findings</a>	</body>
+
+        <div class="card">
+
+          <div class="card-icon">&#127908;</div>        <span>Ibe Mohammed Ali</span>
+
+          <h3>The Task</h3>
+
+          <p>        <span class="dot">&middot;</span>      <a href="#team">Team</a></html>
+
+            Given a recording of a person describing the Cookie Theft picture, predict:
+
+            <strong>healthy</strong> or <strong>Alzheimer&#39;s</strong>.        <span>Kubra Sag</span>
+
+          </p>
+
+        </div>        <span class="dot">&middot;</span>    </div>
+
+        <div class="card">
+
+          <div class="card-icon">&#128202;</div>        <span>Poorav Rawat</span>  </div>
+
+          <h3>The Dataset</h3>
+
+          <p>      </div></nav>
+
+            131 real audio recordings from Kaggle &mdash; 76 healthy controls, 55
+
+            Alzheimer&#39;s patients. A small, class-imbalanced clinical dataset.      <div class="hero-links">
+
+          </p>
+
+        </div>        <a href="https://github.com/ibeeeees/alzheimer-research" class="btn" target="_blank" rel="noopener">GitHub Repository &nearr;</a><!-- ===== HERO ===== -->
+
+        <div class="card">
+
+          <div class="card-icon">&#128300;</div>        <a href="#results" class="btn btn-ghost">View Results &darr;</a><header class="hero">
+
+          <h3>The Question</h3>
+
+          <p>      </div>  <div class="container">
+
+            Which model architecture and input representation best captures these
+
+            acoustic differences on a small clinical dataset?    </div>    <p class="label">Machine Learning &middot; Speech Analysis &middot; Healthcare</p>
+
+          </p>
+
+        </div>  </header>    <h1>Alzheimer's Disease Detection<br />from Speech Audio</h1>
+
+      </div>
+
+    </section>    <p class="subtitle">
+
+
+
+    <section id="method" class="container">  <main>      Comparing CNN, RNN, SVM, and Logistic Regression on spectrogram representations of the Cookie Theft picture description task.
+
+      <p class="section-label">Methodology</p>
+
+      <h2>How we processed the audio</h2>    </p>
+
+      <p>
+
+        Raw <code>.wav</code> files go through a four-stage preprocessing pipeline    <!-- PROBLEM -->    <p class="authors">Ibe Mohammed Ali &middot; Kubra Sag &middot; Poorav Rawat</p>
+
+        before being fed to any model. The goal is to convert variable-length audio
+
+        into fixed-size 2D representations that capture frequency content over time.    <section id="problem" class="container">    <div class="hero-actions">
+
+      </p>
+
+      <p class="section-label">Background</p>      <a href="#results" class="btn btn-primary">See Results ↓</a>
+
+      <div class="pipeline">
+
+        <div class="pipeline-step">      <h2>Why speech?</h2>      <a href="https://github.com/ibeeeees/alzheimer-research" class="btn btn-ghost" target="_blank" rel="noopener">GitHub →</a>
+
+          <span class="step-num">1</span>
+
+          <div>      <p>    </div>
+
+            <h4>Resample</h4>
+
+            <p>All audio resampled to <strong>16 kHz</strong> mono</p>        Clinical diagnosis of Alzheimer's disease relies on costly cognitive assessments,  </div>
+
+          </div>
+
+        </div>        neuroimaging, and biomarker analysis. But Alzheimer's-related cognitive decline</header>
+
+        <div class="pipeline-arrow">&rarr;</div>
+
+        <div class="pipeline-step">        produces <strong>measurable changes in how people speak</strong>: longer pauses,
+
+          <span class="step-num">2</span>
+
+          <div>        reduced vocabulary, altered prosody, and less coherent descriptions.<!-- ===== MOTIVATION ===== -->
+
+            <h4>Normalize</h4>
+
+            <p>Peak amplitude normalized to [-1, 1]</p>      </p><section id="motivation" class="section">
+
+          </div>
+
+        </div>      <p>  <div class="container">
+
+        <div class="pipeline-arrow">&rarr;</div>
+
+        <div class="pipeline-step">        Speech is <strong>non-invasive, low-cost, and easy to collect</strong>. If a model can    <span class="section-label">Why This Matters</span>
+
+          <span class="step-num">3</span>
+
+          <div>        reliably detect Alzheimer's from a short audio clip, it could enable earlier screening    <h2>Motivation</h2>
+
+            <h4>Pad / Truncate</h4>
+
+            <p>Fixed to <strong>10 seconds</strong> (160,000 samples)</p>        in primary care settings — before expensive tests are ordered.    <div class="two-col">
+
+          </div>
+
+        </div>      </p>      <div>
+
+        <div class="pipeline-arrow">&rarr;</div>
+
+        <div class="pipeline-step">        <p>
+
+          <span class="step-num">4</span>
+
+          <div>      <div class="card-row">          Clinical diagnosis of Alzheimer's relies on <strong>costly neuroimaging</strong> and <strong>time-consuming cognitive assessments</strong>. By the time these tools detect the disease, significant neural degeneration has often already occurred.
+
+            <h4>Spectrogram</h4>
+
+            <p>Log-Mel spectrogram: <strong>128 &times; 313</strong></p>        <div class="card">        </p>
+
+          </div>
+
+        </div>          <div class="card-icon">&#127908;</div>        <p>
+
+      </div>
+
+          <h3>The Task</h3>          Speech is different. It's <strong>non-invasive</strong>, <strong>inexpensive to record</strong>, and sensitive to early cognitive changes. Alzheimer's patients exhibit measurable acoustic differences — longer pauses, reduced vocabulary, altered prosody — even before clinical diagnosis.
+
+      <div class="detail-box">
+
+        <h4>What is a log-Mel spectrogram?</h4>          <p>        </p>
+
+        <p>
+
+          A spectrogram is a 2D image where the x-axis is time, the y-axis is            Given a recording of a person describing the <em>Cookie Theft</em> picture,      </div>
+
+          frequency, and pixel intensity represents energy. The &ldquo;Mel&rdquo;
+
+          scale compresses frequencies to match human perception (we are more            predict: <strong>healthy</strong> or <strong>Alzheimer's</strong>.      <div class="callout">
+
+          sensitive to low frequencies). The &ldquo;log&rdquo; scales energy in
+
+          decibels, matching how we perceive loudness. The result: a 128 &times; 313          </p>        <h4>The Question</h4>
+
+          grayscale image that captures <em>what</em> frequencies are present and
+
+          <em>when</em> &mdash; exactly the information that differs between healthy        </div>        <p>
+
+          and Alzheimer&#39;s speech.
+
+        </p>        <div class="card">          Can machine learning models, trained on <strong>spectrogram representations</strong> of speech, reliably distinguish Alzheimer's patients from healthy controls? And which model architecture works best given limited clinical data?
+
+      </div>
+
+          <div class="card-icon">&#128202;</div>        </p>
+
+      <div class="detail-box">
+
+        <h4>Configuration</h4>          <h3>The Dataset</h3>      </div>
+
+        <p>All settings are centralized in <code>config.py</code>:</p>
+
+        <pre><code>SAMPLE_RATE    = 16000     # Hz          <p>    </div>
+
+N_MELS         = 128       # Mel filter banks
+
+N_FFT          = 1024      # FFT window size            131 real audio recordings from Kaggle — 76 healthy controls, 55 Alzheimer's  </div>
+
+HOP_LENGTH     = 512       # Hop between windows
+
+FEATURE_TYPE   = "logmel"  # mfcc | mel | logmel            patients. A small, class-imbalanced clinical dataset.</section>
+
+TRAIN / VAL / TEST = 70% / 15% / 15%  (stratified)</code></pre>
+
+      </div>          </p>
+
+    </section>
+
+        </div><!-- ===== DATA ===== -->
+
+    <section id="models" class="container">
+
+      <p class="section-label">Model Architectures</p>        <div class="card"><section id="data" class="section section-alt">
+
+      <h2>Four approaches, one dataset</h2>
+
+      <p>          <div class="card-icon">&#128300;</div>  <div class="container">
+
+        We compared two deep learning models and two classical ML models. Each sees
+
+        the same preprocessed data and the same train/val/test split.          <h3>The Question</h3>    <span class="section-label">Dataset</span>
+
+      </p>
+
+          <p>    <h2>The Data</h2>
+
+      <div class="model-grid">
+
+        <div class="model-card">            Which model architecture and input representation best captures these    <p class="section-desc">
+
+          <div class="model-tag deep">Deep Learning</div>
+
+          <h3>CNN</h3>            acoustic differences on a small clinical dataset?      We use the <a href="https://www.kaggle.com/datasets/cycoool29/movement-disorders-voice" target="_blank" rel="noopener">Movement Disorders Voice Dataset</a> from Kaggle — raw audio recordings of patients performing the Cookie Theft picture description task.
+
+          <p class="model-detail">Convolutional Neural Network</p>
+
+          <p>          </p>    </p>
+
+            Treats the spectrogram as a <strong>2D image</strong>. Three convolutional
+
+            layers with batch normalization learn spatial patterns &mdash; localized        </div>    <div class="stats-row">
+
+            frequency-time motifs that differ between healthy and Alzheimer&#39;s speech.
+
+          </p>      </div>      <div class="stat-card">
+
+          <div class="model-specs">
+
+            <span>10.3M params</span>    </section>        <span class="stat-number">131</span>
+
+            <span>3 conv layers (32&rarr;64&rarr;128)</span>
+
+            <span>Dropout: 0.4</span>        <span class="stat-label">Total recordings</span>
+
+          </div>
+
+          <p class="model-who">Implemented by <strong>Ibe</strong></p>    <!-- METHOD -->      </div>
+
+        </div>
+
+    <section id="method" class="container">      <div class="stat-card">
+
+        <div class="model-card">
+
+          <div class="model-tag deep">Deep Learning</div>      <p class="section-label">Methodology</p>        <span class="stat-number">76</span>
+
+          <h3>RNN</h3>
+
+          <p class="model-detail">Bidirectional GRU</p>      <h2>How we processed the audio</h2>        <span class="stat-label">Healthy controls</span>
+
+          <p>
+
+            Treats the spectrogram as a <strong>sequence over time</strong>. Each time      <p>      </div>
+
+            step is a 128-D frequency vector. The bidirectional GRU reads the sequence
+
+            forward and backward, capturing temporal dynamics like pauses and rhythm.        Raw <code>.wav</code> files go through a four-stage preprocessing pipeline before      <div class="stat-card">
+
+          </p>
+
+          <div class="model-specs">        being fed to any model. The goal is to convert variable-length audio into        <span class="stat-number">55</span>
+
+            <span>511K params</span>
+
+            <span>2-layer bidirectional GRU</span>        fixed-size 2D representations that capture frequency content over time.        <span class="stat-label">Alzheimer's patients</span>
+
+            <span>Hidden: 128</span>
+
+          </div>      </p>      </div>
+
+          <p class="model-who">Implemented by <strong>Poorav</strong></p>
+
+        </div>      <div class="stat-card">
+
+
+
+        <div class="model-card">      <div class="pipeline">        <span class="stat-number">70 / 15 / 15</span>
+
+          <div class="model-tag classical">Classical ML</div>
+
+          <h3>SVM</h3>        <div class="pipeline-step">        <span class="stat-label">Train / Val / Test split (%)</span>
+
+          <p class="model-detail">Support Vector Machine</p>
+
+          <p>          <span class="step-num">1</span>      </div>
+
+            Flattens the spectrogram into a <strong>40,064-D vector</strong> and finds
+
+            the maximum-margin hyperplane separating the two classes. Uses an RBF          <div>    </div>
+
+            kernel to handle non-linear boundaries.
+
+          </p>            <h4>Resample</h4>  </div>
+
+          <div class="model-specs">
+
+            <span>RBF kernel</span>            <p>All audio resampled to <strong>16 kHz</strong> mono</p></section>
+
+            <span>C = 1.0</span>
+
+            <span>&gamma; = scale</span>          </div>
+
+          </div>
+
+          <p class="model-who">Implemented by <strong>Kubra</strong></p>        </div><!-- ===== PIPELINE ===== -->
+
+        </div>
+
+        <div class="pipeline-arrow">&rarr;</div><section id="methods" class="section">
+
+        <div class="model-card">
+
+          <div class="model-tag classical">Classical ML</div>        <div class="pipeline-step">  <div class="container">
+
+          <h3>Logistic Regression</h3>
+
+          <p class="model-detail">Linear Baseline</p>          <span class="step-num">2</span>    <span class="section-label">How It Works</span>
+
+          <p>
+
+            The simplest model: learns a <strong>linear decision boundary</strong> on          <div>    <h2>Pipeline &amp; Methods</h2>
+
+            flattened MFCC features. Serves as a performance floor &mdash; any model
+
+            that can&#39;t beat logistic regression isn&#39;t learning anything useful.            <h4>Normalize</h4>
+
+          </p>
+
+          <div class="model-specs">            <p>Peak amplitude normalized to [-1, 1]</p>    <div class="pipeline">
+
+            <span>Linear classifier</span>
+
+            <span>C = 1.0</span>          </div>      <div class="pipe-step">
+
+            <span>Max 1000 iter</span>
+
+          </div>        </div>        <div class="pipe-num">1</div>
+
+          <p class="model-who">Implemented by <strong>Poorav</strong></p>
+
+        </div>        <div class="pipeline-arrow">&rarr;</div>        <h4>Raw Audio</h4>
+
+      </div>
+
+    </section>        <div class="pipeline-step">        <p>.wav files at varying sample rates and lengths</p>
+
+
+
+    <section id="results" class="container">          <span class="step-num">3</span>      </div>
+
+      <p class="section-label">Experimental Results</p>
+
+      <h2>What we found</h2>          <div>      <div class="pipe-arrow">→</div>
+
+      <p>
+
+        All four models were trained and evaluated on the same stratified split:            <h4>Pad / Truncate</h4>      <div class="pipe-step">
+
+        91 train / 20 val / 20 test. Results are on the held-out test set.
+
+      </p>            <p>Fixed to <strong>10 seconds</strong> (160,000 samples)</p>        <div class="pipe-num">2</div>
+
+
+
+      <div class="table-wrap">          </div>        <h4>Preprocessing</h4>
+
+        <table>
+
+          <thead>        </div>        <p>Resample to 16 kHz, normalize amplitude, optional VAD silence removal</p>
+
+            <tr>
+
+              <th>Model</th>        <div class="pipeline-arrow">&rarr;</div>      </div>
+
+              <th>Accuracy</th>
+
+              <th>Precision</th>        <div class="pipeline-step">      <div class="pipe-arrow">→</div>
+
+              <th>Recall</th>
+
+              <th>F1-Score</th>          <span class="step-num">4</span>      <div class="pipe-step">
+
+            </tr>
+
+          </thead>          <div>        <div class="pipe-num">3</div>
+
+          <tbody>
+
+            <tr class="row-best">            <h4>Spectrogram</h4>        <h4>Feature Extraction</h4>
+
+              <td><strong>SVM</strong> <span class="badge">Best</span></td>
+
+              <td><strong>75.0%</strong></td>            <p>Log-Mel spectrogram: <strong>128 &times; 313</strong></p>        <p>Log-Mel spectrogram (128 bands) via librosa — a 2D time×frequency image</p>
+
+              <td><strong>71.4%</strong></td>
+
+              <td>62.5%</td>          </div>      </div>
+
+              <td><strong>66.7%</strong></td>
+
+            </tr>        </div>      <div class="pipe-arrow">→</div>
+
+            <tr>
+
+              <td>CNN</td>      </div>      <div class="pipe-step">
+
+              <td>70.0%</td>
+
+              <td>62.5%</td>        <div class="pipe-num">4</div>
+
+              <td>62.5%</td>
+
+              <td>62.5%</td>      <div class="detail-box">        <h4>Classification</h4>
+
+            </tr>
+
+            <tr>        <h4>What is a log-Mel spectrogram?</h4>        <p>Feed spectrograms into CNN, RNN, SVM, or Logistic Regression</p>
+
+              <td>Logistic Regression</td>
+
+              <td>65.0%</td>        <p>      </div>
+
+              <td>55.6%</td>
+
+              <td>62.5%</td>          A spectrogram is a 2D image where the x-axis is time, the y-axis is frequency,    </div>
+
+              <td>58.8%</td>
+
+            </tr>          and pixel intensity represents energy. The "Mel" scale compresses frequencies
+
+            <tr>
+
+              <td>RNN</td>          to match human perception (we're more sensitive to low frequencies). The "log"    <h3 class="models-heading">The Four Models</h3>
+
+              <td>65.0%</td>
+
+              <td>57.1%</td>          scales energy in decibels, matching how we perceive loudness. The result: a    <div class="model-grid">
+
+              <td>50.0%</td>
+
+              <td>53.3%</td>          128 &times; 313 grayscale image that captures <em>what</em> frequencies are present      <div class="model-card">
+
+            </tr>
+
+          </tbody>          and <em>when</em> — exactly the information that differs between healthy and        <div class="model-tag tag-cnn">CNN</div>
+
+        </table>
+
+      </div>          Alzheimer's speech.        <h4>Convolutional Neural Network</h4>
+
+
+
+      <h3 class="viz-title">Visualizations</h3>        </p>        <p>Treats the spectrogram as a <strong>2D image</strong>. Three convolutional layers with batch normalization detect localized frequency-time patterns. 10.3M parameters.</p>
+
+      <div class="viz-grid">
+
+        <figure>      </div>        <div class="model-meta">
+
+          <img src="/model_comparison_metrics.png" alt="Grouped bar chart comparing accuracy, precision, recall, and F1 across all 4 models" loading="lazy" />
+
+          <figcaption>Metrics comparison across all models</figcaption>          <span>3 Conv layers</span>
+
+        </figure>
+
+        <figure>      <div class="detail-box">          <span>Dropout 0.4</span>
+
+          <img src="/model_comparison_f1.png" alt="Horizontal bar chart ranking models by F1-score" loading="lazy" />
+
+          <figcaption>F1-score ranking</figcaption>        <h4>Configuration</h4>          <span>Adam optimizer</span>
+
+        </figure>
+
+        <figure class="full-width">        <p>All settings are centralized in <code>config.py</code>:</p>        </div>
+
+          <img src="/model_comparison_confusion.png" alt="Side-by-side confusion matrices for CNN, RNN, SVM, and Logistic Regression" loading="lazy" />
+
+          <figcaption>Confusion matrices &mdash; all 4 models side-by-side</figcaption><pre><code>SAMPLE_RATE    = 16000     # Hz      </div>
+
+        </figure>
+
+        <figure class="full-width">N_MELS         = 128       # Mel filter banks      <div class="model-card">
+
+          <img src="/model_comparison_training.png" alt="Training and validation loss and accuracy curves for CNN and RNN" loading="lazy" />
+
+          <figcaption>Training curves for CNN and RNN (loss and accuracy over 15 epochs)</figcaption>N_FFT          = 1024      # FFT window size        <div class="model-tag tag-rnn">RNN</div>
+
+        </figure>
+
+      </div>HOP_LENGTH     = 512       # Hop between windows        <h4>Bidirectional GRU</h4>
+
+
+
+      <h3 class="findings-title">Key Findings</h3>FEATURE_TYPE   = "logmel"  # mfcc | mel | logmel        <p>Treats the spectrogram as a <strong>time sequence</strong>. Two stacked bidirectional GRU layers capture temporal patterns like pauses and rhythm changes. 511K parameters.</p>
+
+      <div class="findings">
+
+        <div class="finding">TRAIN / VAL / TEST = 70% / 15% / 15%  (stratified)</code></pre>        <div class="model-meta">
+
+          <span class="finding-num">1</span>
+
+          <div>      </div>          <span>2 GRU layers</span>
+
+            <h4>SVM wins on small data</h4>
+
+            <p>    </section>          <span>Bidirectional</span>
+
+              At 75.0% accuracy and 66.7% F1, SVM outperformed both deep learning
+
+              models. On a dataset of only 131 samples, classical models with          <span>Hidden size 128</span>
+
+              well-chosen kernels generalize better than neural networks with
+
+              millions of parameters.    <!-- MODELS -->        </div>
+
+            </p>
+
+          </div>    <section id="models" class="container">      </div>
+
+        </div>
+
+        <div class="finding">      <p class="section-label">Model Architectures</p>      <div class="model-card">
+
+          <span class="finding-num">2</span>
+
+          <div>      <h2>Four approaches, one dataset</h2>        <div class="model-tag tag-svm">SVM</div>
+
+            <h4>CNN overfits despite regularization</h4>
+
+            <p>      <p>        <h4>Support Vector Machine</h4>
+
+              CNN reached 96.7% training accuracy but only 70.0% test accuracy
+
+              &mdash; a clear overfitting gap. With 10.3M parameters and only 91        We compared two deep learning models and two classical ML models. Each sees the        <p>Classical approach using an <strong>RBF kernel</strong> on flattened spectrogram features. Finds the optimal hyperplane separating the two classes in high-dimensional space.</p>
+
+              training samples, the model memorizes rather than generalizes.
+
+            </p>        same preprocessed data and the same train/val/test split.        <div class="model-meta">
+
+          </div>
+
+        </div>      </p>          <span>RBF kernel</span>
+
+        <div class="finding">
+
+          <span class="finding-num">3</span>          <span>C = 1.0</span>
+
+          <div>
+
+            <h4>RNN misses half of Alzheimer&#39;s patients</h4>      <div class="model-grid">          <span>γ = scale</span>
+
+            <p>
+
+              RNN had the lowest recall (50.0%), meaning it classified half of        <div class="model-card">        </div>
+
+              Alzheimer&#39;s patients as healthy. In a clinical screening context,
+
+              false negatives are the most dangerous outcome.          <div class="model-tag deep">Deep Learning</div>      </div>
+
+            </p>
+
+          </div>          <h3>CNN</h3>      <div class="model-card">
+
+        </div>
+
+        <div class="finding">          <p class="model-detail">Convolutional Neural Network</p>        <div class="model-tag tag-logreg">LogReg</div>
+
+          <span class="finding-num">4</span>
+
+          <div>          <p>        <h4>Logistic Regression</h4>
+
+            <h4>Dataset size is the bottleneck</h4>
+
+            <p>            Treats the spectrogram as a <strong>2D image</strong>. Three convolutional        <p>The simplest <strong>baseline</strong>. A linear model on flattened MFCC vectors that establishes a performance floor. Serves as a sanity check for more complex models.</p>
+
+              With only 55 Alzheimer&#39;s samples, every model is data-starved.
+
+              The relative success of SVM suggests that when labeled clinical data            layers with batch normalization learn spatial patterns — localized        <div class="model-meta">
+
+              is scarce, simpler models should be the first choice &mdash; not deep
+
+              learning.            frequency-time motifs that differ between healthy and Alzheimer's speech.          <span>Linear</span>
+
+            </p>
+
+          </div>          </p>          <span>C = 1.0</span>
+
+        </div>
+
+      </div>          <div class="model-specs">          <span>1000 max iter</span>
+
+    </section>
+
+            <span>10.3M params</span>        </div>
+
+    <section id="how" class="container">
+
+      <p class="section-label">Implementation</p>            <span>3 conv layers (32&rarr;64&rarr;128)</span>      </div>
+
+      <h2>How we built it</h2>
+
+            <span>Dropout: 0.4</span>    </div>
+
+      <div class="detail-box">
+
+        <h4>Tech Stack</h4>          </div>  </div>
+
+        <div class="tech-pills">
+
+          <span>Python</span>          <p class="model-who">Implemented by <strong>Ibe</strong></p></section>
+
+          <span>PyTorch</span>
+
+          <span>librosa</span>        </div>
+
+          <span>scikit-learn</span>
+
+          <span>NumPy</span><!-- ===== RESULTS ===== -->
+
+          <span>matplotlib</span>
+
+          <span>seaborn</span>        <div class="model-card"><section id="results" class="section section-alt">
+
+          <span>Astro</span>
+
+        </div>          <div class="model-tag deep">Deep Learning</div>  <div class="container">
+
+      </div>
+
+          <h3>RNN</h3>    <span class="section-label">What We Found</span>
+
+      <div class="detail-box">
+
+        <h4>Project Structure</h4>          <p class="model-detail">Bidirectional GRU</p>    <h2>Results</h2>
+
+        <pre><code>alzheimer-research/
+
+├── main.py                # Train and evaluate a single model          <p>
+
+├── config.py              # All hyperparameters
+
+├── data/            Treats the spectrogram as a <strong>sequence over time</strong>. Each time    <div class="results-table-wrap">
+
+│   ├── dataset.py         # Loading, splitting, DataLoaders
+
+│   ├── preprocessing.py   # Resampling, normalization, VAD            step is a 128-D frequency vector. The bidirectional GRU reads the sequence      <table class="results-table">
+
+│   └── features.py        # Spectrogram extraction
+
+├── models/            forward and backward, capturing temporal dynamics like pauses and rhythm.        <thead>
+
+│   ├── cnn.py             # SpectrogramCNN
+
+│   ├── rnn.py             # Bidirectional GRU          </p>          <tr>
+
+│   └── sklearn_models.py  # SVM and LogReg wrappers
+
+├── training/          <div class="model-specs">            <th>Model</th>
+
+│   └── trainer.py         # Training loop + checkpointing
+
+├── evaluation/            <span>511K params</span>            <th>Accuracy</th>
+
+│   └── metrics.py         # Metrics + visualization
+
+└── experiments/            <span>2-layer bidirectional GRU</span>            <th>Precision</th>
+
+    ├── model_comparison.py    # All 4 models head-to-head
+
+    ├── feature_comparison.py  # MFCC vs Mel vs log-Mel            <span>Hidden: 128</span>            <th>Recall</th>
+
+    ├── architecture_search.py # CNN tuning
+
+    └── dataset_size.py        # Ablation study</code></pre>          </div>            <th>F1-Score</th>
+
+      </div>
+
+          <p class="model-who">Implemented by <strong>Poorav</strong></p>          </tr>
+
+      <div class="detail-box">
+
+        <h4>Reproduce our results</h4>        </div>        </thead>
+
+        <pre><code># Clone and install
+
+git clone https://github.com/ibeeeees/alzheimer-research.git        <tbody>
+
+cd alzheimer-research
+
+pip install -r requirements.txt        <div class="model-card">          <tr class="row-best">
+
+
+
+# Download data from Kaggle into data_raw/alzheimer/ and data_raw/healthy/          <div class="model-tag classical">Classical ML</div>            <td><span class="model-tag tag-svm">SVM</span></td>
+
+
+
+# Run the full model comparison          <h3>SVM</h3>            <td><strong>75.0%</strong></td>
+
+python3 experiments/model_comparison.py
+
+          <p class="model-detail">Support Vector Machine</p>            <td><strong>71.4%</strong></td>
+
+# Or train a single model
+
+python3 main.py --model cnn          <p>            <td>62.5%</td>
+
+python3 main.py --model rnn
+
+python3 main.py --model svm            Flattens the spectrogram into a <strong>40,064-D vector</strong> and finds            <td><strong>66.7%</strong></td>
+
+python3 main.py --model logreg</code></pre>
+
+      </div>            the maximum-margin hyperplane separating the two classes. Uses an RBF kernel          </tr>
+
+    </section>
+
+            to handle non-linear boundaries.          <tr>
+
+    <section class="container">
+
+      <p class="section-label">Limitations and Future Work</p>          </p>            <td><span class="model-tag tag-cnn">CNN</span></td>
+
+      <h2>What we would do differently</h2>
+
+      <div class="limits-grid">          <div class="model-specs">            <td>70.0%</td>
+
+        <div class="limit-card">
+
+          <h4>Small dataset</h4>            <span>RBF kernel</span>            <td>62.5%</td>
+
+          <p>131 samples is insufficient for deep learning. Data augmentation (time stretching, pitch shifting, noise injection) could help.</p>
+
+        </div>            <span>C = 1.0</span>            <td>62.5%</td>
+
+        <div class="limit-card">
+
+          <h4>No cross-validation</h4>            <span>&gamma; = scale</span>            <td>62.5%</td>
+
+          <p>A single 70/15/15 split means results are sensitive to which samples land in each set. K-fold CV would give more robust estimates.</p>
+
+        </div>          </div>          </tr>
+
+        <div class="limit-card">
+
+          <h4>Binary only</h4>          <p class="model-who">Implemented by <strong>Kubra</strong></p>          <tr>
+
+          <p>Healthy vs. Alzheimer&#39;s is a simplification. Multi-class staging (e.g., mild cognitive impairment) would be more clinically useful.</p>
+
+        </div>        </div>            <td><span class="model-tag tag-logreg">LogReg</span></td>
+
+        <div class="limit-card">
+
+          <h4>No linguistic features</h4>            <td>65.0%</td>
+
+          <p>Only acoustic features are used. Adding vocabulary diversity, pause patterns, and disfluency rates from transcripts could improve results.</p>
+
+        </div>        <div class="model-card">            <td>55.6%</td>
+
+      </div>
+
+    </section>          <div class="model-tag classical">Classical ML</div>            <td>62.5%</td>
+
+
+
+    <section id="team" class="container">          <h3>Logistic Regression</h3>            <td>58.8%</td>
+
+      <p class="section-label">Team</p>
+
+      <h2>Who did what</h2>          <p class="model-detail">Linear Baseline</p>          </tr>
+
+      <div class="team-grid">
+
+        <div class="team-card">          <p>          <tr>
+
+          <div class="team-avatar">IM</div>
+
+          <h3>Ibe Mohammed Ali</h3>            The simplest model: learns a <strong>linear decision boundary</strong> on            <td><span class="model-tag tag-rnn">RNN</span></td>
+
+          <p class="team-role">Data and CNN Lead</p>
+
+          <ul>            flattened MFCC features. Serves as a performance floor — any model that            <td>65.0%</td>
+
+            <li>Audio preprocessing pipeline</li>
+
+            <li>Spectrogram feature extraction</li>            can't beat logistic regression isn't learning anything useful.            <td>57.1%</td>
+
+            <li>CNN model architecture and training</li>
+
+            <li>Project infrastructure and site</li>          </p>            <td>50.0%</td>
+
+          </ul>
+
+        </div>          <div class="model-specs">            <td>53.3%</td>
+
+        <div class="team-card">
+
+          <div class="team-avatar">KS</div>            <span>Linear classifier</span>          </tr>
+
+          <h3>Kubra Sag</h3>
+
+          <p class="team-role">SVM and Experiments Lead</p>            <span>C = 1.0</span>        </tbody>
+
+          <ul>
+
+            <li>SVM model implementation</li>            <span>Max 1000 iter</span>      </table>
+
+            <li>Hyperparameter tuning</li>
+
+            <li>Experimental studies design</li>          </div>    </div>
+
+            <li>Feature comparison experiments</li>
+
+          </ul>          <p class="model-who">Implemented by <strong>Poorav</strong></p>
+
+        </div>
+
+        <div class="team-card">        </div>    <div class="viz-grid">
+
+          <div class="team-avatar">PR</div>
+
+          <h3>Poorav Rawat</h3>      </div>      <figure>
+
+          <p class="team-role">RNN and Evaluation Lead</p>
+
+          <ul>    </section>        <img src="/model_comparison_metrics.png" alt="Grouped bar chart comparing accuracy, precision, recall, and F1 across all 4 models" loading="lazy" />
+
+            <li>RNN (bidirectional GRU) implementation</li>
+
+            <li>Logistic Regression baseline</li>        <figcaption>All metrics compared across the four models</figcaption>
+
+            <li>Evaluation metrics and analysis</li>
+
+            <li>Ablation studies</li>    <!-- RESULTS -->      </figure>
+
+          </ul>
+
+        </div>    <section id="results" class="container">      <figure>
+
+      </div>
+
+      <p class="team-note">All members collaborated on experimental design and manuscript preparation.</p>      <p class="section-label">Experimental Results</p>        <img src="/model_comparison_f1.png" alt="Horizontal bar chart ranking models by F1-score" loading="lazy" />
+
+    </section>
+
+      <h2>What we found</h2>        <figcaption>F1-score ranking</figcaption>
+
+    <section class="container">
+
+      <p class="section-label">References</p>      <p>      </figure>
+
+      <h2>Citations</h2>
+
+      <ol class="references">        All four models were trained and evaluated on the same stratified split:      <figure class="viz-wide">
+
+        <li>
+
+          Fraser, K. C., Meltzer, J. A., and Rudzicz, F. (2016). Linguistic features        91 train / 20 val / 20 test. Results are on the held-out test set.        <img src="/model_comparison_confusion.png" alt="Side-by-side confusion matrices for all 4 models" loading="lazy" />
+
+          identify Alzheimer&#39;s disease in narrative speech. Journal of Alzheimer&#39;s
+
+          Disease, 49, 407&ndash;422.      </p>        <figcaption>Confusion matrices — side by side</figcaption>
+
+        </li>
+
+        <li>      </figure>
+
+          Becker, J. T., Boller, F., Lopez, O. L., Saxton, J., and McGonigle, K. L.
+
+          (1994). The natural history of Alzheimer&#39;s disease. Archives of Neurology,      <div class="table-wrap">      <figure class="viz-wide">
+
+          51, 585&ndash;594.
+
+        </li>        <table>        <img src="/model_comparison_training.png" alt="Training and validation loss/accuracy curves for CNN and RNN" loading="lazy" />
+
+        <li>
+
+          Boller, F. and Becker, J. (2005). DementiaBank database guide. University          <thead>        <figcaption>Training curves for CNN and RNN — note the overfitting gap</figcaption>
+
+          of Pittsburgh.
+
+        </li>            <tr>      </figure>
+
+      </ol>
+
+    </section>              <th>Model</th>    </div>
+
+
+
+  </main>              <th>Accuracy</th>  </div>
+
+
+
+  <footer>              <th>Precision</th></section>
+
+    <div class="container">
+
+      <p>              <th>Recall</th>
+
+        Alzheimer&#39;s Disease Detection from Speech &middot;
+
+        <a href="https://github.com/ibeeeees/alzheimer-research" target="_blank" rel="noopener">GitHub</a> &middot;              <th>F1-Score</th><!-- ===== KEY FINDINGS ===== -->
+
+        2025
+
+      </p>            </tr><section id="findings" class="section">
+
+    </div>
+
+  </footer>          </thead>  <div class="container">
+
+
+
+</Base>          <tbody>    <span class="section-label">Analysis</span>
+
+
+
+<style>            <tr class="row-best">    <h2>Key Findings</h2>
+
+  nav {
+
+    position: sticky;              <td><strong>SVM</strong> <span class="badge">Best</span></td>    <div class="findings-list">
+
+    top: 0;
+
+    z-index: 100;              <td><strong>75.0%</strong></td>      <div class="finding">
+
+    background: rgba(10, 10, 11, 0.85);
+
+    backdrop-filter: blur(12px);              <td><strong>71.4%</strong></td>        <div class="finding-num">1</div>
+
+    border-bottom: 1px solid var(--border);
+
+  }              <td>62.5%</td>        <div>
+
+  .nav-inner {
+
+    max-width: var(--max-w);              <td><strong>66.7%</strong></td>          <h4>SVM wins on small data</h4>
+
+    margin: 0 auto;
+
+    padding: 0.75rem 1.5rem;            </tr>          <p>With only 131 samples, SVM's RBF kernel generalizes better than neural networks. Classical models should be the first choice when labeled clinical speech data is scarce.</p>
+
+    display: flex;
+
+    align-items: center;            <tr>        </div>
+
+    justify-content: space-between;
+
+  }              <td>CNN</td>      </div>
+
+  .nav-title {
+
+    font-weight: 600;              <td>70.0%</td>      <div class="finding">
+
+    font-size: 0.9rem;
+
+    letter-spacing: -0.01em;              <td>62.5%</td>        <div class="finding-num">2</div>
+
+  }
+
+  .nav-links {              <td>62.5%</td>        <div>
+
+    display: flex;
+
+    gap: 1.5rem;              <td>62.5%</td>          <h4>CNN overfits despite regularization</h4>
+
+  }
+
+  .nav-links a {            </tr>          <p>The CNN's 10.3M parameters are excessive for 91 training samples. It ranked second (70% accuracy), but the training curves show a clear overfitting gap — training accuracy hits 96% while validation plateaus at 85%.</p>
+
+    color: var(--text-muted);
+
+    font-size: 0.85rem;            <tr>        </div>
+
+    font-weight: 400;
+
+    transition: color 0.15s;              <td>Logistic Regression</td>      </div>
+
+  }
+
+  .nav-links a:hover {              <td>65.0%</td>      <div class="finding">
+
+    color: var(--text);
+
+    text-decoration: none;              <td>55.6%</td>        <div class="finding-num">3</div>
+
+  }
+
+              <td>62.5%</td>        <div>
+
+  .container {
+
+    max-width: var(--max-w);              <td>58.8%</td>          <h4>RNN misses half the patients</h4>
+
+    margin: 0 auto;
+
+    padding: 0 1.5rem;            </tr>          <p>With 50% recall, the bidirectional GRU missed half of Alzheimer's cases. In a clinical setting, false negatives are the most dangerous error. The sequential approach needed more data to learn meaningful temporal patterns.</p>
+
+  }
+
+  section {            <tr>        </div>
+
+    padding: 5rem 1.5rem;
+
+    border-bottom: 1px solid var(--border);              <td>RNN</td>      </div>
+
+  }
+
+              <td>65.0%</td>      <div class="finding">
+
+  .hero {
+
+    padding: 6rem 1.5rem 5rem;              <td>57.1%</td>        <div class="finding-num">4</div>
+
+    border-bottom: 1px solid var(--border);
+
+    text-align: center;              <td>50.0%</td>        <div>
+
+  }
+
+  .hero .label {              <td>53.3%</td>          <h4>Logistic Regression is a strong baseline</h4>
+
+    font-size: 0.8rem;
+
+    font-weight: 500;            </tr>          <p>Despite being the simplest model, LogReg matched RNN's accuracy (65%) and had higher recall (62.5% vs 50%). Sometimes the simplest model is the most clinically responsible one.</p>
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.08em;          </tbody>        </div>
+
+    color: var(--accent);
+
+    margin-bottom: 1rem;        </table>      </div>
+
+  }
+
+  .hero h1 {      </div>      <div class="finding">
+
+    font-size: clamp(2rem, 5vw, 3.2rem);
+
+    font-weight: 700;        <div class="finding-num">5</div>
+
+    letter-spacing: -0.03em;
+
+    line-height: 1.15;      <h3 class="viz-title">Visualizations</h3>        <div>
+
+    margin-bottom: 1.25rem;
+
+  }      <div class="viz-grid">          <h4>Data is the bottleneck, not architecture</h4>
+
+  .hero .subtitle {
+
+    font-size: 1.05rem;        <figure>          <p>All models are data-limited. With 55 Alzheimer's samples total, even the best model barely exceeds chance on the minority class. The path to better performance is more data and augmentation, not bigger models.</p>
+
+    color: var(--text-muted);
+
+    max-width: 620px;          <img src="/model_comparison_metrics.png" alt="Grouped bar chart comparing accuracy, precision, recall, and F1 across all 4 models" loading="lazy" />        </div>
+
+    margin: 0 auto 1.5rem;
+
+    line-height: 1.7;          <figcaption>Metrics comparison across all models</figcaption>      </div>
+
+  }
+
+  .hero-meta {        </figure>    </div>
+
+    font-size: 0.9rem;
+
+    color: var(--text-muted);        <figure>  </div>
+
+    margin-bottom: 2rem;
+
+  }          <img src="/model_comparison_f1.png" alt="Horizontal bar chart ranking models by F1-score" loading="lazy" /></section>
+
+  .hero-meta .dot {
+
+    margin: 0 0.5rem;          <figcaption>F1-score ranking</figcaption>
+
+    opacity: 0.4;
+
+  }        </figure><!-- ===== LIMITATIONS ===== -->
+
+  .hero-links {
+
+    display: flex;        <figure class="full-width"><section class="section section-alt">
+
+    gap: 0.75rem;
+
+    justify-content: center;          <img src="/model_comparison_confusion.png" alt="Side-by-side confusion matrices for CNN, RNN, SVM, and Logistic Regression" loading="lazy" />  <div class="container">
+
+    flex-wrap: wrap;
+
+  }          <figcaption>Confusion matrices — all 4 models side-by-side</figcaption>    <span class="section-label">Honest Assessment</span>
+
+  .btn {
+
+    display: inline-block;        </figure>    <h2>Limitations &amp; Future Work</h2>
+
+    padding: 0.6rem 1.4rem;
+
+    border-radius: 6px;        <figure class="full-width">    <div class="limits-grid">
+
+    font-size: 0.85rem;
+
+    font-weight: 500;          <img src="/model_comparison_training.png" alt="Training and validation loss and accuracy curves for CNN and RNN" loading="lazy" />      <div class="limit-card">
+
+    background: var(--accent);
+
+    color: #fff;          <figcaption>Training curves for CNN and RNN (loss and accuracy over 15 epochs)</figcaption>        <h4>Small dataset</h4>
+
+    transition: opacity 0.15s;
+
+  }        </figure>        <p>131 samples is insufficient for deep learning. Data augmentation (time stretch, pitch shift, noise injection) would help.</p>
+
+  .btn:hover {
+
+    opacity: 0.85;      </div>      </div>
+
+    text-decoration: none;
+
+  }      <div class="limit-card">
+
+  .btn-ghost {
+
+    background: transparent;      <h3 class="findings-title">Key Findings</h3>        <h4>No cross-validation</h4>
+
+    border: 1px solid var(--border);
+
+    color: var(--text-muted);      <div class="findings">        <p>A single 70/15/15 split makes results sensitive to which samples land where. K-fold CV would give more robust estimates.</p>
+
+  }
+
+  .btn-ghost:hover {        <div class="finding">      </div>
+
+    border-color: var(--text-muted);
+
+    color: var(--text);          <span class="finding-num">1</span>      <div class="limit-card">
+
+  }
+
+          <div>        <h4>Binary only</h4>
+
+  .section-label {
+
+    font-size: 0.75rem;            <h4>SVM wins on small data</h4>        <p>We classify healthy vs. AD. Multi-class staging (e.g., MCI) would be more clinically useful.</p>
+
+    font-weight: 600;
+
+    text-transform: uppercase;            <p>      </div>
+
+    letter-spacing: 0.1em;
+
+    color: var(--accent);              At 75.0% accuracy and 66.7% F1, SVM outperformed both deep learning      <div class="limit-card">
+
+    margin-bottom: 0.5rem;
+
+  }              models. On a dataset of only 131 samples, classical models with        <h4>Acoustic features only</h4>
+
+  section h2 {
+
+    font-size: 1.75rem;              well-chosen kernels generalize better than neural networks with millions        <p>No linguistic features from transcripts. Vocabulary diversity, disfluency rates, and semantic coherence could improve performance.</p>
+
+    font-weight: 700;
+
+    letter-spacing: -0.02em;              of parameters.      </div>
+
+    margin-bottom: 1rem;
+
+  }            </p>    </div>
+
+  section > p {
+
+    color: var(--text-muted);          </div>  </div>
+
+    margin-bottom: 1rem;
+
+    max-width: 660px;        </div></section>
+
+  }
+
+        <div class="finding">
+
+  .card-row {
+
+    display: grid;          <span class="finding-num">2</span><!-- ===== TEAM ===== -->
+
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+    gap: 1rem;          <div><section id="team" class="section">
+
+    margin-top: 2rem;
+
+  }            <h4>CNN overfits despite regularization</h4>  <div class="container">
+
+  .card {
+
+    background: var(--bg-card);            <p>    <span class="section-label">Who Did What</span>
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;              CNN reached 96.7% training accuracy but only 70.0% test accuracy — a    <h2>Team</h2>
+
+    padding: 1.5rem;
+
+  }              clear overfitting gap. With 10.3M parameters and only 91 training    <div class="team-grid">
+
+  .card-icon {
+
+    font-size: 1.5rem;              samples, the model memorizes rather than generalizes.      <div class="team-card">
+
+    margin-bottom: 0.75rem;
+
+  }            </p>        <div class="team-avatar">IM</div>
+
+  .card h3 {
+
+    font-size: 1rem;          </div>        <h4>Ibe Mohammed Ali</h4>
+
+    font-weight: 600;
+
+    margin-bottom: 0.5rem;        </div>        <p class="team-role">Data &amp; CNN</p>
+
+  }
+
+  .card p {        <div class="finding">        <ul>
+
+    font-size: 0.875rem;
+
+    color: var(--text-muted);          <span class="finding-num">3</span>          <li>Audio preprocessing pipeline</li>
+
+    line-height: 1.6;
+
+  }          <div>          <li>Spectrogram &amp; MFCC extraction</li>
+
+
+
+  .pipeline {            <h4>RNN misses half of Alzheimer's patients</h4>          <li>CNN architecture design &amp; training</li>
+
+    display: flex;
+
+    align-items: center;            <p>          <li>Dataset loading &amp; splitting</li>
+
+    gap: 0.5rem;
+
+    margin: 2rem 0;              RNN had the lowest recall (50.0%), meaning it classified half of        </ul>
+
+    overflow-x: auto;
+
+    padding-bottom: 0.5rem;              Alzheimer's patients as healthy. In a clinical screening context,      </div>
+
+  }
+
+  .pipeline-step {              false negatives are the most dangerous outcome.      <div class="team-card">
+
+    display: flex;
+
+    align-items: flex-start;            </p>        <div class="team-avatar">KS</div>
+
+    gap: 0.75rem;
+
+    background: var(--bg-card);          </div>        <h4>Kubra Sag</h4>
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;        </div>        <p class="team-role">SVM &amp; Experiments</p>
+
+    padding: 1rem;
+
+    min-width: 150px;        <div class="finding">        <ul>
+
+    flex: 1;
+
+  }          <span class="finding-num">4</span>          <li>SVM model implementation</li>
+
+  .step-num {
+
+    display: flex;          <div>          <li>Hyperparameter tuning</li>
+
+    align-items: center;
+
+    justify-content: center;            <h4>Dataset size is the bottleneck</h4>          <li>Feature comparison experiments</li>
+
+    width: 28px;
+
+    height: 28px;            <p>          <li>Architecture search experiments</li>
+
+    min-width: 28px;
+
+    border-radius: 50%;              With only 55 Alzheimer's samples, every model is data-starved. The        </ul>
+
+    background: var(--accent-soft);
+
+    color: var(--accent);              relative success of SVM suggests that when labeled clinical data is      </div>
+
+    font-size: 0.8rem;
+
+    font-weight: 600;              scarce, simpler models should be the first choice — not deep learning.      <div class="team-card">
+
+  }
+
+  .pipeline-step h4 {            </p>        <div class="team-avatar">PR</div>
+
+    font-size: 0.85rem;
+
+    font-weight: 600;          </div>        <h4>Poorav Rawat</h4>
+
+    margin-bottom: 0.25rem;
+
+  }        </div>        <p class="team-role">RNN &amp; Evaluation</p>
+
+  .pipeline-step p {
+
+    font-size: 0.8rem;      </div>        <ul>
+
+    color: var(--text-muted);
+
+    margin: 0;    </section>          <li>RNN (bidirectional GRU) implementation</li>
+
+  }
+
+  .pipeline-arrow {          <li>Logistic Regression baseline</li>
+
+    color: var(--text-muted);
+
+    font-size: 1.2rem;    <!-- HOW WE BUILT IT -->          <li>Evaluation metrics &amp; visualization</li>
+
+    flex-shrink: 0;
+
+  }    <section id="how" class="container">          <li>Ablation studies &amp; results analysis</li>
+
+
+
+  .detail-box {      <p class="section-label">Implementation</p>        </ul>
+
+    background: var(--bg-card);
+
+    border: 1px solid var(--border);      <h2>How we built it</h2>      </div>
+
+    border-radius: 10px;
+
+    padding: 1.5rem;    </div>
+
+    margin: 1.5rem 0;
+
+  }      <div class="detail-box">  </div>
+
+  .detail-box h4 {
+
+    font-size: 0.9rem;        <h4>Tech Stack</h4></section>
+
+    font-weight: 600;
+
+    margin-bottom: 0.75rem;        <div class="tech-pills">
+
+  }
+
+  .detail-box p {          <span>Python</span><!-- ===== TECH STACK ===== -->
+
+    font-size: 0.875rem;
+
+    color: var(--text-muted);          <span>PyTorch</span><section class="section section-alt">
+
+    line-height: 1.65;
+
+    max-width: none;          <span>librosa</span>  <div class="container">
+
+  }
+
+          <span>scikit-learn</span>    <span class="section-label">Tools</span>
+
+  .model-grid {
+
+    display: grid;          <span>NumPy</span>    <h2>Tech Stack</h2>
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 1rem;          <span>matplotlib</span>    <div class="tech-row">
+
+    margin-top: 2rem;
+
+  }          <span>seaborn</span>      <span class="tech-chip">Python</span>
+
+  .model-card {
+
+    background: var(--bg-card);          <span>Astro</span>      <span class="tech-chip">PyTorch</span>
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;        </div>      <span class="tech-chip">librosa</span>
+
+    padding: 1.5rem;
+
+    display: flex;      </div>      <span class="tech-chip">scikit-learn</span>
+
+    flex-direction: column;
+
+  }      <span class="tech-chip">NumPy</span>
+
+  .model-tag {
+
+    font-size: 0.7rem;      <div class="detail-box">      <span class="tech-chip">matplotlib</span>
+
+    font-weight: 600;
+
+    text-transform: uppercase;        <h4>Project Structure</h4>      <span class="tech-chip">seaborn</span>
+
+    letter-spacing: 0.06em;
+
+    padding: 0.2rem 0.6rem;<pre><code>alzheimer-research/      <span class="tech-chip">WebRTC VAD</span>
+
+    border-radius: 4px;
+
+    width: fit-content;├── main.py                # Train and evaluate a single model      <span class="tech-chip">Google Colab (T4 GPU)</span>
+
+    margin-bottom: 0.75rem;
+
+  }├── config.py              # All hyperparameters      <span class="tech-chip">GitHub</span>
+
+  .model-tag.deep {
+
+    background: var(--accent-soft);├── data/    </div>
+
+    color: var(--accent);
+
+  }│   ├── dataset.py         # Loading, splitting, DataLoaders  </div>
+
+  .model-tag.classical {
+
+    background: var(--green-soft);│   ├── preprocessing.py   # Resampling, normalization, VAD</section>
+
+    color: var(--green);
+
+  }│   └── features.py        # Spectrogram extraction
+
+  .model-card h3 {
+
+    font-size: 1.2rem;├── models/<!-- ===== REFERENCES ===== -->
+
+    font-weight: 700;
+
+    margin-bottom: 0.15rem;│   ├── cnn.py             # SpectrogramCNN<section class="section">
+
+  }
+
+  .model-detail {│   ├── rnn.py             # Bidirectional GRU  <div class="container">
+
+    font-size: 0.8rem;
+
+    color: var(--text-muted);│   └── sklearn_models.py  # SVM and LogReg wrappers    <span class="section-label">Sources</span>
+
+    margin-bottom: 0.75rem;
+
+  }├── training/    <h2>References</h2>
+
+  .model-card > p {
+
+    font-size: 0.875rem;│   └── trainer.py         # Training loop + checkpointing    <ol class="references">
+
+    color: var(--text-muted);
+
+    line-height: 1.6;├── evaluation/      <li>Fraser, K. C., Meltzer, J. A., and Rudzicz, F. (2016). Linguistic features identify Alzheimer's disease in narrative speech. <em>Journal of Alzheimer's Disease</em>, 49, 407–422.</li>
+
+    flex: 1;
+
+    max-width: none;│   └── metrics.py         # Metrics + visualization      <li>Becker, J. T., Boller, F., Lopez, O. L., Saxton, J., and McGonigle, K. L. (1994). The natural history of Alzheimer's disease: Description of study cohort and accuracy of diagnosis. <em>Archives of Neurology</em>, 51, 585–594.</li>
+
+  }
+
+  .model-specs {└── experiments/      <li>Boller, F. and Becker, J. (2005). DementiaBank database guide. University of Pittsburgh.</li>
+
+    display: flex;
+
+    flex-wrap: wrap;    ├── model_comparison.py    # All 4 models head-to-head    </ol>
+
+    gap: 0.5rem;
+
+    margin-top: 1rem;    ├── feature_comparison.py  # MFCC vs Mel vs log-Mel  </div>
+
+    margin-bottom: 0.75rem;
+
+  }    ├── architecture_search.py # CNN tuning</section>
+
+  .model-specs span {
+
+    font-family: var(--mono);    └── dataset_size.py        # Ablation study</code></pre>
+
+    font-size: 0.75rem;
+
+    background: var(--bg);      </div><!-- ===== FOOTER ===== -->
+
+    border: 1px solid var(--border);
+
+    padding: 0.2rem 0.5rem;<footer>
+
+    border-radius: 4px;
+
+    color: var(--text-muted);      <div class="detail-box">  <div class="container">
+
+  }
+
+  .model-who {        <h4>Reproduce our results</h4>    <p>Alzheimer's Disease Detection from Speech &middot; 2026</p>
+
+    font-size: 0.8rem;
+
+    color: var(--text-muted);<pre><code># Clone and install    <p class="footer-links">
+
+    margin: 0;
+
+  }git clone https://github.com/ibeeeees/alzheimer-research.git      <a href="https://github.com/ibeeeees/alzheimer-research" target="_blank" rel="noopener">GitHub Repository</a>
+
+
+
+  .table-wrap {cd alzheimer-research      &middot;
+
+    overflow-x: auto;
+
+    margin: 2rem 0;pip install -r requirements.txt      <a href="https://www.kaggle.com/datasets/cycoool29/movement-disorders-voice" target="_blank" rel="noopener">Dataset</a>
+
+  }
+
+  table {    </p>
+
+    width: 100%;
+
+    border-collapse: collapse;# Download data from Kaggle into data_raw/alzheimer/ and data_raw/healthy/    <p class="footer-note">This is a research project. It should not be used for clinical decision-making without prospective validation.</p>
+
+    font-size: 0.9rem;
+
+  }  </div>
+
+  th {
+
+    text-align: left;# Run the full model comparison</footer>
+
+    font-weight: 600;
+
+    font-size: 0.75rem;python3 experiments/model_comparison.py
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.06em;</Base>
+
+    color: var(--text-muted);
+
+    padding: 0.75rem 1rem;# Or train a single model
+
+    border-bottom: 1px solid var(--border);
+
+  }python3 main.py --model cnn<style>
+
+  td {
+
+    padding: 0.75rem 1rem;python3 main.py --model rnn  /* ===== NAV ===== */
+
+    border-bottom: 1px solid var(--border);
+
+    color: var(--text-muted);python3 main.py --model svm  nav {
+
+  }
+
+  tr.row-best td {python3 main.py --model logreg</code></pre>    position: fixed;
+
+    color: var(--text);
+
+    background: var(--green-soft);      </div>    top: 0;
+
+  }
+
+  .badge {    </section>    left: 0;
+
+    font-size: 0.65rem;
+
+    font-weight: 600;    right: 0;
+
+    text-transform: uppercase;
+
+    background: var(--green);    <!-- LIMITATIONS -->    z-index: 100;
+
+    color: var(--bg);
+
+    padding: 0.15rem 0.45rem;    <section class="container">    background: rgba(10, 10, 11, 0.85);
+
+    border-radius: 3px;
+
+    margin-left: 0.4rem;      <p class="section-label">Limitations &amp; Future Work</p>    backdrop-filter: blur(12px);
+
+    vertical-align: middle;
+
+  }      <h2>What we'd do differently</h2>    border-bottom: 1px solid var(--border);
+
+
+
+  .viz-title,      <div class="limits-grid">  }
+
+  .findings-title {
+
+    font-size: 1.2rem;        <div class="limit-card">
+
+    font-weight: 600;
+
+    margin: 2.5rem 0 1rem;          <h4>Small dataset</h4>  .nav-inner {
+
+  }
+
+  .viz-grid {          <p>131 samples is insufficient for deep learning. Data augmentation (time stretching, pitch shifting, noise injection) could help.</p>    max-width: var(--max-w);
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);        </div>    margin: 0 auto;
+
+    gap: 1rem;
+
+  }        <div class="limit-card">    padding: 0.75rem 1.5rem;
+
+  .viz-grid figure {
+
+    background: var(--bg-card);          <h4>No cross-validation</h4>    display: flex;
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;          <p>A single 70/15/15 split means results are sensitive to which samples land in each set. K-fold CV would give more robust estimates.</p>    align-items: center;
+
+    overflow: hidden;
+
+    margin: 0;        </div>    justify-content: space-between;
+
+  }
+
+  .viz-grid figure.full-width {        <div class="limit-card">  }
+
+    grid-column: 1 / -1;
+
+  }          <h4>Binary only</h4>
+
+  .viz-grid img {
+
+    width: 100%;          <p>Healthy vs. Alzheimer's is a simplification. Multi-class staging (e.g., mild cognitive impairment) would be more clinically useful.</p>  .nav-logo {
+
+    display: block;
+
+    border-radius: 0;        </div>    font-weight: 700;
+
+  }
+
+  .viz-grid figcaption {        <div class="limit-card">    font-size: 0.95rem;
+
+    padding: 0.75rem 1rem;
+
+    font-size: 0.8rem;          <h4>No linguistic features</h4>    letter-spacing: -0.02em;
+
+    color: var(--text-muted);
+
+    border-top: 1px solid var(--border);          <p>Only acoustic features are used. Adding vocabulary diversity, pause patterns, and disfluency rates from transcripts could improve results.</p>  }
+
+  }
+
+        </div>
+
+  .findings {
+
+    display: flex;      </div>  .accent { color: var(--accent); }
+
+    flex-direction: column;
+
+    gap: 1rem;    </section>
+
+  }
+
+  .finding {  .nav-links {
+
+    display: flex;
+
+    gap: 1rem;    <!-- TEAM -->    display: flex;
+
+    background: var(--bg-card);
+
+    border: 1px solid var(--border);    <section id="team" class="container">    gap: 1.5rem;
+
+    border-radius: 10px;
+
+    padding: 1.25rem;      <p class="section-label">Team</p>    font-size: 0.8rem;
+
+  }
+
+  .finding-num {      <h2>Who did what</h2>    font-weight: 500;
+
+    display: flex;
+
+    align-items: center;      <div class="team-grid">  }
+
+    justify-content: center;
+
+    width: 32px;        <div class="team-card">
+
+    height: 32px;
+
+    min-width: 32px;          <div class="team-avatar">IM</div>  .nav-links a {
+
+    border-radius: 50%;
+
+    background: var(--accent-soft);          <h3>Ibe Mohammed Ali</h3>    color: var(--text-muted);
+
+    color: var(--accent);
+
+    font-weight: 700;          <p class="team-role">Data &amp; CNN Lead</p>    transition: color 0.15s;
+
+    font-size: 0.85rem;
+
+  }          <ul>  }
+
+  .finding h4 {
+
+    font-size: 0.95rem;            <li>Audio preprocessing pipeline</li>
+
+    font-weight: 600;
+
+    margin-bottom: 0.35rem;            <li>Spectrogram feature extraction</li>  .nav-links a:hover {
+
+  }
+
+  .finding p {            <li>CNN model architecture &amp; training</li>    color: var(--text);
+
+    font-size: 0.875rem;
+
+    color: var(--text-muted);            <li>Project infrastructure &amp; site</li>    text-decoration: none;
+
+    line-height: 1.6;
+
+    max-width: none;          </ul>  }
+
+    margin: 0;
+
+  }        </div>
+
+
+
+  .tech-pills {        <div class="team-card">  /* ===== HERO ===== */
+
+    display: flex;
+
+    flex-wrap: wrap;          <div class="team-avatar">KS</div>  .hero {
+
+    gap: 0.5rem;
+
+  }          <h3>Kubra Sag</h3>    padding: 8rem 1.5rem 4rem;
+
+  .tech-pills span {
+
+    font-family: var(--mono);          <p class="team-role">SVM &amp; Experiments Lead</p>    text-align: center;
+
+    font-size: 0.8rem;
+
+    padding: 0.35rem 0.75rem;          <ul>  }
+
+    border-radius: 5px;
+
+    background: var(--accent-soft);            <li>SVM model implementation</li>
+
+    color: var(--accent);
+
+    font-weight: 500;            <li>Hyperparameter tuning</li>  .hero .container { max-width: 700px; }
+
+  }
+
+            <li>Experimental studies design</li>
+
+  .limits-grid {
+
+    display: grid;            <li>Feature comparison experiments</li>  .label {
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 1rem;          </ul>    font-size: 0.75rem;
+
+    margin-top: 2rem;
+
+  }        </div>    font-weight: 600;
+
+  .limit-card {
+
+    background: var(--bg-card);        <div class="team-card">    text-transform: uppercase;
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;          <div class="team-avatar">PR</div>    letter-spacing: 0.12em;
+
+    padding: 1.25rem;
+
+  }          <h3>Poorav Rawat</h3>    color: var(--accent);
+
+  .limit-card h4 {
+
+    font-size: 0.9rem;          <p class="team-role">RNN &amp; Evaluation Lead</p>    margin-bottom: 1rem;
+
+    font-weight: 600;
+
+    margin-bottom: 0.4rem;          <ul>  }
+
+    color: var(--amber);
+
+  }            <li>RNN (bidirectional GRU) implementation</li>
+
+  .limit-card p {
+
+    font-size: 0.85rem;            <li>Logistic Regression baseline</li>  h1 {
+
+    color: var(--text-muted);
+
+    line-height: 1.6;            <li>Evaluation metrics &amp; analysis</li>    font-size: clamp(2rem, 5vw, 3rem);
+
+    max-width: none;
+
+    margin: 0;            <li>Ablation studies</li>    font-weight: 700;
+
+  }
+
+          </ul>    letter-spacing: -0.03em;
+
+  .team-grid {
+
+    display: grid;        </div>    line-height: 1.15;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 1rem;      </div>    margin-bottom: 1rem;
+
+    margin-top: 2rem;
+
+  }      <p class="team-note">All members collaborated on experimental design and manuscript preparation.</p>  }
+
+  .team-card {
+
+    background: var(--bg-card);    </section>
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;  .subtitle {
+
+    padding: 1.5rem;
+
+    text-align: center;    <!-- REFERENCES -->    color: var(--text-muted);
+
+  }
+
+  .team-avatar {    <section class="container">    font-size: 1.05rem;
+
+    width: 56px;
+
+    height: 56px;      <p class="section-label">References</p>    max-width: 560px;
+
+    border-radius: 50%;
+
+    background: var(--accent-soft);      <h2>Citations</h2>    margin: 0 auto 0.75rem;
+
+    color: var(--accent);
+
+    display: flex;      <ol class="references">  }
+
+    align-items: center;
+
+    justify-content: center;        <li>
+
+    font-weight: 700;
+
+    font-size: 1.1rem;          Fraser, K. C., Meltzer, J. A., and Rudzicz, F. (2016). Linguistic features identify  .authors {
+
+    margin: 0 auto 1rem;
+
+  }          Alzheimer's disease in narrative speech. <em>Journal of Alzheimer's Disease</em>, 49, 407–422.    font-size: 0.85rem;
+
+  .team-card h3 {
+
+    font-size: 1rem;        </li>    color: var(--text-muted);
+
+    font-weight: 600;
+
+    margin-bottom: 0.2rem;        <li>    margin-bottom: 2rem;
+
+  }
+
+  .team-role {          Becker, J. T., Boller, F., Lopez, O. L., Saxton, J., and McGonigle, K. L. (1994).  }
+
+    font-size: 0.8rem;
+
+    color: var(--accent);          The natural history of Alzheimer's disease. <em>Archives of Neurology</em>, 51, 585–594.
+
+    font-weight: 500;
+
+    margin-bottom: 0.75rem;        </li>  .hero-actions {
+
+  }
+
+  .team-card ul {        <li>    display: flex;
+
+    text-align: left;
+
+    list-style: none;          Boller, F. and Becker, J. (2005). DementiaBank database guide. University of Pittsburgh.    gap: 0.75rem;
+
+    padding: 0;
+
+  }        </li>    justify-content: center;
+
+  .team-card li {
+
+    font-size: 0.825rem;      </ol>    flex-wrap: wrap;
+
+    color: var(--text-muted);
+
+    padding: 0.25rem 0 0.25rem 1rem;    </section>  }
+
+    position: relative;
+
+  }
+
+  .team-card li::before {
+
+    content: "\2013";  </main>  .btn {
+
+    position: absolute;
+
+    left: 0;    display: inline-block;
+
+    color: var(--border);
+
+  }  <!-- FOOTER -->    padding: 0.6rem 1.4rem;
+
+  .team-note {
+
+    text-align: center;  <footer>    font-size: 0.85rem;
+
+    font-size: 0.85rem;
+
+    color: var(--text-muted);    <div class="container">    font-weight: 600;
+
+    margin-top: 1rem;
+
+  }      <p>    border-radius: 6px;
+
+
+
+  .references {        Alzheimer's Disease Detection from Speech &middot;    transition: all 0.15s;
+
+    padding-left: 1.25rem;
+
+  }        <a href="https://github.com/ibeeeees/alzheimer-research" target="_blank" rel="noopener">GitHub</a> &middot;    text-decoration: none !important;
+
+  .references li {
+
+    font-size: 0.85rem;        2025  }
+
+    color: var(--text-muted);
+
+    margin-bottom: 0.75rem;      </p>
+
+    line-height: 1.6;
+
+  }    </div>  .btn-primary {
+
+
+
+  footer {  </footer>    background: var(--accent);
+
+    padding: 2.5rem 1.5rem;
+
+    text-align: center;    color: #fff;
+
+  }
+
+  footer p {</Base>  }
+
+    font-size: 0.8rem;
+
+    color: var(--text-muted);
+
+  }
+
+<style>  .btn-primary:hover { filter: brightness(1.15); }
+
+  @media (max-width: 700px) {
+
+    .nav-links {  /* NAV */
+
+      display: none;
+
+    }  nav {  .btn-ghost {
+
+    .model-grid {
+
+      grid-template-columns: 1fr;    position: sticky;    background: transparent;
+
+    }
+
+    .viz-grid {    top: 0;    border: 1px solid var(--border);
+
+      grid-template-columns: 1fr;
+
+    }    z-index: 100;    color: var(--text-muted);
+
+    .limits-grid {
+
+      grid-template-columns: 1fr;    background: rgba(10, 10, 11, 0.85);  }
+
+    }
+
+    .team-grid {    backdrop-filter: blur(12px);
+
+      grid-template-columns: 1fr;
+
+    }    border-bottom: 1px solid var(--border);  .btn-ghost:hover {
+
+    .pipeline {
+
+      flex-direction: column;  }    border-color: var(--text-muted);
+
+    }
+
+    .pipeline-arrow {  .nav-inner {    color: var(--text);
+
+      transform: rotate(90deg);
+
+    }    max-width: var(--max-w);  }
+
+    section {
+
+      padding: 3rem 1.5rem;    margin: 0 auto;
+
+    }
+
+  }    padding: 0.75rem 1.5rem;  /* ===== SECTIONS ===== */
+
+</style>
+
+    display: flex;  .container {
+
+    align-items: center;    max-width: var(--max-w);
+
+    justify-content: space-between;    margin: 0 auto;
+
+  }    padding: 0 1.5rem;
+
+  .nav-title {  }
+
+    font-weight: 600;
+
+    font-size: 0.9rem;  .section { padding: 5rem 0; }
+
+    letter-spacing: -0.01em;
+
+  }  .section-alt {
+
+  .nav-links {    background: var(--bg-card);
+
+    display: flex;    border-top: 1px solid var(--border);
+
+    gap: 1.5rem;    border-bottom: 1px solid var(--border);
+
+  }  }
+
+  .nav-links a {
+
+    color: var(--text-muted);  .section-label {
+
+    font-size: 0.85rem;    display: block;
+
+    font-weight: 400;    font-size: 0.7rem;
+
+    transition: color 0.15s;    font-weight: 600;
+
+  }    text-transform: uppercase;
+
+  .nav-links a:hover {    letter-spacing: 0.12em;
+
+    color: var(--text);    color: var(--accent);
+
+    text-decoration: none;    margin-bottom: 0.5rem;
+
+  }  }
+
+
+
+  /* LAYOUT */  h2 {
+
+  .container {    font-size: 1.75rem;
+
+    max-width: var(--max-w);    font-weight: 700;
+
+    margin: 0 auto;    letter-spacing: -0.02em;
+
+    padding: 0 1.5rem;    margin-bottom: 1.5rem;
+
+  }  }
+
+  section {
+
+    padding: 5rem 1.5rem;  h3 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.2rem; }
+
+    border-bottom: 1px solid var(--border);
+
+  }  .section-desc {
+
+    color: var(--text-muted);
+
+  /* HERO */    max-width: 600px;
+
+  .hero {    margin-bottom: 2rem;
+
+    padding: 6rem 1.5rem 5rem;  }
+
+    border-bottom: 1px solid var(--border);
+
+    text-align: center;  /* ===== TWO-COL ===== */
+
+  }  .two-col {
+
+  .hero .label {    display: grid;
+
+    font-size: 0.8rem;    grid-template-columns: 1fr 1fr;
+
+    font-weight: 500;    gap: 2rem;
+
+    text-transform: uppercase;    align-items: start;
+
+    letter-spacing: 0.08em;  }
+
+    color: var(--accent);
+
+    margin-bottom: 1rem;  .two-col p { margin-bottom: 1rem; }
+
+  }
+
+  .hero h1 {  .callout {
+
+    font-size: clamp(2rem, 5vw, 3.2rem);    background: var(--accent-soft);
+
+    font-weight: 700;    border: 1px solid rgba(109, 93, 252, 0.2);
+
+    letter-spacing: -0.03em;    border-radius: 8px;
+
+    line-height: 1.15;    padding: 1.25rem 1.5rem;
+
+    margin-bottom: 1.25rem;  }
+
+  }
+
+  .hero .subtitle {  .callout h4 {
+
+    font-size: 1.05rem;    font-size: 0.8rem;
+
+    color: var(--text-muted);    text-transform: uppercase;
+
+    max-width: 620px;    letter-spacing: 0.08em;
+
+    margin: 0 auto 1.5rem;    color: var(--accent);
+
+    line-height: 1.7;    margin-bottom: 0.5rem;
+
+  }  }
+
+  .hero-meta {
+
+    font-size: 0.9rem;  /* ===== STATS ===== */
+
+    color: var(--text-muted);  .stats-row {
+
+    margin-bottom: 2rem;    display: grid;
+
+  }    grid-template-columns: repeat(4, 1fr);
+
+  .hero-meta .dot {    gap: 1rem;
+
+    margin: 0 0.5rem;  }
+
+    opacity: 0.4;
+
+  }  .stat-card {
+
+  .hero-links {    background: var(--bg);
+
+    display: flex;    border: 1px solid var(--border);
+
+    gap: 0.75rem;    border-radius: 8px;
+
+    justify-content: center;    padding: 1.25rem;
+
+    flex-wrap: wrap;    text-align: center;
+
+  }  }
+
+  .btn {
+
+    display: inline-block;  .stat-number {
+
+    padding: 0.6rem 1.4rem;    display: block;
+
+    border-radius: 6px;    font-size: 1.5rem;
+
+    font-size: 0.85rem;    font-weight: 700;
+
+    font-weight: 500;    color: var(--accent);
+
+    background: var(--accent);    margin-bottom: 0.25rem;
+
+    color: #fff;  }
+
+    transition: opacity 0.15s;
+
+  }  .stat-label {
+
+  .btn:hover { opacity: 0.85; text-decoration: none; }    font-size: 0.75rem;
+
+  .btn-ghost {    color: var(--text-muted);
+
+    background: transparent;  }
+
+    border: 1px solid var(--border);
+
+    color: var(--text-muted);  /* ===== PIPELINE ===== */
+
+  }  .pipeline {
+
+  .btn-ghost:hover { border-color: var(--text-muted); color: var(--text); }    display: flex;
+
+    align-items: flex-start;
+
+  /* SECTION LABELS */    gap: 0.5rem;
+
+  .section-label {    margin: 2rem 0;
+
+    font-size: 0.75rem;    flex-wrap: wrap;
+
+    font-weight: 600;  }
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.1em;  .pipe-step {
+
+    color: var(--accent);    flex: 1;
+
+    margin-bottom: 0.5rem;    min-width: 140px;
+
+  }    background: var(--bg-card);
+
+  section h2 {    border: 1px solid var(--border);
+
+    font-size: 1.75rem;    border-radius: 8px;
+
+    font-weight: 700;    padding: 1rem;
+
+    letter-spacing: -0.02em;  }
+
+    margin-bottom: 1rem;
+
+  }  .pipe-num {
+
+  section > p {    display: inline-flex;
+
+    color: var(--text-muted);    align-items: center;
+
+    margin-bottom: 1rem;    justify-content: center;
+
+    max-width: 660px;    width: 24px;
+
+  }    height: 24px;
+
+    border-radius: 50%;
+
+  /* CARDS */    background: var(--accent-soft);
+
+  .card-row {    color: var(--accent);
+
+    display: grid;    font-size: 0.75rem;
+
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));    font-weight: 700;
+
+    gap: 1rem;    margin-bottom: 0.5rem;
+
+    margin-top: 2rem;  }
+
+  }
+
+  .card {  .pipe-step h4 { font-size: 0.9rem; margin-bottom: 0.25rem; }
+
+    background: var(--bg-card);  .pipe-step p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;  .pipe-arrow {
+
+    padding: 1.5rem;    align-self: center;
+
+  }    color: var(--text-muted);
+
+  .card-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }    font-size: 1.25rem;
+
+  .card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }    padding-top: 1rem;
+
+  .card p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }  }
+
+
+
+  /* PIPELINE */  /* ===== MODEL CARDS ===== */
+
+  .pipeline {  .models-heading { margin-top: 3rem; }
+
+    display: flex;
+
+    align-items: center;  .model-grid {
+
+    gap: 0.5rem;    display: grid;
+
+    margin: 2rem 0;    grid-template-columns: 1fr 1fr;
+
+    overflow-x: auto;    gap: 1rem;
+
+    padding-bottom: 0.5rem;  }
+
+  }
+
+  .pipeline-step {  .model-card {
+
+    display: flex;    background: var(--bg-card);
+
+    align-items: flex-start;    border: 1px solid var(--border);
+
+    gap: 0.75rem;    border-radius: 8px;
+
+    background: var(--bg-card);    padding: 1.25rem;
+
+    border: 1px solid var(--border);    transition: border-color 0.15s;
+
+    border-radius: 8px;  }
+
+    padding: 1rem;
+
+    min-width: 150px;  .model-card:hover { border-color: var(--text-muted); }
+
+    flex: 1;
+
+  }  .model-card h4 { font-size: 0.95rem; margin-bottom: 0.5rem; }
+
+  .step-num {  .model-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.75rem; }
+
+    display: flex;
+
+    align-items: center;  .model-tag {
+
+    justify-content: center;    display: inline-block;
+
+    width: 28px; height: 28px; min-width: 28px;    font-size: 0.7rem;
+
+    border-radius: 50%;    font-weight: 700;
+
+    background: var(--accent-soft);    text-transform: uppercase;
+
+    color: var(--accent);    letter-spacing: 0.06em;
+
+    font-size: 0.8rem;    padding: 0.2em 0.6em;
+
+    font-weight: 600;    border-radius: 4px;
+
+  }    margin-bottom: 0.5rem;
+
+  .pipeline-step h4 { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.25rem; }  }
+
+  .pipeline-step p { font-size: 0.8rem; color: var(--text-muted); margin: 0; }
+
+  .pipeline-arrow { color: var(--text-muted); font-size: 1.2rem; flex-shrink: 0; }  .tag-cnn { background: var(--accent-soft); color: var(--accent); }
+
+  .tag-rnn { background: var(--green-soft); color: var(--green); }
+
+  /* DETAIL BOX */  .tag-svm { background: var(--amber-soft); color: var(--amber); }
+
+  .detail-box {  .tag-logreg { background: var(--red-soft); color: var(--red); }
+
+    background: var(--bg-card);
+
+    border: 1px solid var(--border);  .model-meta {
+
+    border-radius: 10px;    display: flex;
+
+    padding: 1.5rem;    gap: 0.75rem;
+
+    margin: 1.5rem 0;    flex-wrap: wrap;
+
+  }    font-size: 0.7rem;
+
+  .detail-box h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem; }    color: var(--text-muted);
+
+  .detail-box p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.65; max-width: none; }    border-top: 1px solid var(--border);
+
+    padding-top: 0.6rem;
+
+  /* MODEL GRID */  }
+
+  .model-grid {
+
+    display: grid;  /* ===== RESULTS TABLE ===== */
+
+    grid-template-columns: repeat(2, 1fr);  .results-table-wrap {
+
+    gap: 1rem;    overflow-x: auto;
+
+    margin-top: 2rem;    margin-bottom: 2.5rem;
+
+  }  }
+
+  .model-card {
+
+    background: var(--bg-card);  .results-table {
+
+    border: 1px solid var(--border);    width: 100%;
+
+    border-radius: 10px;    border-collapse: collapse;
+
+    padding: 1.5rem;    font-size: 0.9rem;
+
+    display: flex;  }
+
+    flex-direction: column;
+
+  }  .results-table th {
+
+  .model-tag {    text-align: left;
+
+    font-size: 0.7rem; font-weight: 600; text-transform: uppercase;    font-size: 0.7rem;
+
+    letter-spacing: 0.06em; padding: 0.2rem 0.6rem; border-radius: 4px;    font-weight: 600;
+
+    width: fit-content; margin-bottom: 0.75rem;    text-transform: uppercase;
+
+  }    letter-spacing: 0.08em;
+
+  .model-tag.deep { background: var(--accent-soft); color: var(--accent); }    color: var(--text-muted);
+
+  .model-tag.classical { background: var(--green-soft); color: var(--green); }    padding: 0.75rem 1rem;
+
+  .model-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.15rem; }    border-bottom: 1px solid var(--border);
+
+  .model-detail { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem !important; }  }
+
+  .model-card > p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; flex: 1; max-width: none; }
+
+  .model-specs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; margin-bottom: 0.75rem; }  .results-table td {
+
+  .model-specs span {    padding: 0.75rem 1rem;
+
+    font-family: var(--mono); font-size: 0.75rem;    border-bottom: 1px solid var(--border);
+
+    background: var(--bg); border: 1px solid var(--border);  }
+
+    padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--text-muted);
+
+  }  .row-best {
+
+  .model-who { font-size: 0.8rem; color: var(--text-muted); margin: 0 !important; }    background: rgba(109, 93, 252, 0.06);
+
+  }
+
+  /* RESULTS TABLE */
+
+  .table-wrap { overflow-x: auto; margin: 2rem 0; }  .row-best td:first-child {
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }    border-left: 3px solid var(--accent);
+
+  th {  }
+
+    text-align: left; font-weight: 600; font-size: 0.75rem;
+
+    text-transform: uppercase; letter-spacing: 0.06em;  /* ===== VISUALIZATION GRID ===== */
+
+    color: var(--text-muted); padding: 0.75rem 1rem;  .viz-grid {
+
+    border-bottom: 1px solid var(--border);    display: grid;
+
+  }    grid-template-columns: 1fr 1fr;
+
+  td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-muted); }    gap: 1.5rem;
+
+  tr.row-best td { color: var(--text); background: var(--green-soft); }  }
+
+  .badge {
+
+    font-size: 0.65rem; font-weight: 600; text-transform: uppercase;  .viz-wide { grid-column: 1 / -1; }
+
+    background: var(--green); color: var(--bg);
+
+    padding: 0.15rem 0.45rem; border-radius: 3px;  .viz-grid figure {
+
+    margin-left: 0.4rem; vertical-align: middle;    background: var(--bg);
+
+  }    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+  /* VISUALIZATIONS */    padding: 1rem;
+
+  .viz-title, .findings-title { font-size: 1.2rem; font-weight: 600; margin: 2.5rem 0 1rem; }  }
+
+  .viz-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+
+  .viz-grid figure {  .viz-grid figcaption {
+
+    background: var(--bg-card); border: 1px solid var(--border);    margin-top: 0.75rem;
+
+    border-radius: 10px; overflow: hidden; margin: 0;    font-size: 0.8rem;
+
+  }    color: var(--text-muted);
+
+  .viz-grid figure.full-width { grid-column: 1 / -1; }    text-align: center;
+
+  .viz-grid img { width: 100%; display: block; border-radius: 0; }  }
+
+  .viz-grid figcaption {
+
+    padding: 0.75rem 1rem; font-size: 0.8rem;  /* ===== FINDINGS ===== */
+
+    color: var(--text-muted); border-top: 1px solid var(--border);  .findings-list {
+
+  }    display: flex;
+
+    flex-direction: column;
+
+  /* FINDINGS */    gap: 1.25rem;
+
+  .findings { display: flex; flex-direction: column; gap: 1rem; }  }
+
+  .finding {
+
+    display: flex; gap: 1rem;  .finding {
+
+    background: var(--bg-card); border: 1px solid var(--border);    display: flex;
+
+    border-radius: 10px; padding: 1.25rem;    gap: 1rem;
+
+  }    align-items: flex-start;
+
+  .finding-num {    background: var(--bg-card);
+
+    display: flex; align-items: center; justify-content: center;    border: 1px solid var(--border);
+
+    width: 32px; height: 32px; min-width: 32px;    border-radius: 8px;
+
+    border-radius: 50%; background: var(--accent-soft);    padding: 1.25rem;
+
+    color: var(--accent); font-weight: 700; font-size: 0.85rem;  }
+
+  }
+
+  .finding h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.35rem; }  .finding-num {
+
+  .finding p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; max-width: none; margin: 0; }    flex-shrink: 0;
+
+    width: 32px;
+
+  /* TECH PILLS */    height: 32px;
+
+  .tech-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }    display: flex;
+
+  .tech-pills span {    align-items: center;
+
+    font-family: var(--mono); font-size: 0.8rem;    justify-content: center;
+
+    padding: 0.35rem 0.75rem; border-radius: 5px;    border-radius: 50%;
+
+    background: var(--accent-soft); color: var(--accent); font-weight: 500;    background: var(--accent-soft);
+
+  }    color: var(--accent);
+
+    font-size: 0.85rem;
+
+  /* LIMITATIONS */    font-weight: 700;
+
+  .limits-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 2rem; }  }
+
+  .limit-card {
+
+    background: var(--bg-card); border: 1px solid var(--border);  .finding h4 { font-size: 0.95rem; margin-bottom: 0.25rem; }
+
+    border-radius: 10px; padding: 1.25rem;  .finding p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+  }
+
+  .limit-card h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--amber); }  /* ===== LIMITATIONS ===== */
+
+  .limit-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; max-width: none; margin: 0; }  .limits-grid {
+
+    display: grid;
+
+  /* TEAM */    grid-template-columns: 1fr 1fr;
+
+  .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2rem; }    gap: 1rem;
+
+  .team-card {  }
+
+    background: var(--bg-card); border: 1px solid var(--border);
+
+    border-radius: 10px; padding: 1.5rem; text-align: center;  .limit-card {
+
+  }    background: var(--bg);
+
+  .team-avatar {    border: 1px solid var(--border);
+
+    width: 56px; height: 56px; border-radius: 50%;    border-radius: 8px;
+
+    background: var(--accent-soft); color: var(--accent);    padding: 1.25rem;
+
+    display: flex; align-items: center; justify-content: center;  }
+
+    font-weight: 700; font-size: 1.1rem; margin: 0 auto 1rem;
+
+  }  .limit-card h4 { font-size: 0.9rem; margin-bottom: 0.35rem; }
+
+  .team-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.2rem; }  .limit-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+
+  .team-role { font-size: 0.8rem; color: var(--accent); font-weight: 500; margin-bottom: 0.75rem !important; }
+
+  .team-card ul { text-align: left; list-style: none; padding: 0; }  /* ===== TEAM ===== */
+
+  .team-card li {  .team-grid {
+
+    font-size: 0.825rem; color: var(--text-muted);    display: grid;
+
+    padding: 0.25rem 0 0.25rem 1rem; position: relative;    grid-template-columns: repeat(3, 1fr);
+
+  }    gap: 1rem;
+
+  .team-card li::before { content: "–"; position: absolute; left: 0; color: var(--border); }  }
+
+  .team-note { text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem; }
+
+  .team-card {
+
+  /* REFERENCES */    background: var(--bg-card);
+
+  .references { padding-left: 1.25rem; }    border: 1px solid var(--border);
+
+  .references li { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem; line-height: 1.6; }    border-radius: 8px;
+
+    padding: 1.5rem;
+
+  /* FOOTER */    text-align: center;
+
+  footer { padding: 2.5rem 1.5rem; text-align: center; }  }
+
+  footer p { font-size: 0.8rem; color: var(--text-muted); }
+
+  .team-avatar {
+
+  /* RESPONSIVE */    width: 48px;
+
+  @media (max-width: 700px) {    height: 48px;
+
+    .nav-links { display: none; }    border-radius: 50%;
+
+    .model-grid { grid-template-columns: 1fr; }    background: var(--accent-soft);
+
+    .viz-grid { grid-template-columns: 1fr; }    color: var(--accent);
+
+    .limits-grid { grid-template-columns: 1fr; }    display: inline-flex;
+
+    .team-grid { grid-template-columns: 1fr; }    align-items: center;
+
+    .pipeline { flex-direction: column; }    justify-content: center;
+
+    .pipeline-arrow { transform: rotate(90deg); }    font-weight: 700;
+
+    section { padding: 3rem 1.5rem; }    font-size: 0.85rem;
+
+  }    margin-bottom: 0.75rem;
+
+</style>  }
+
+
+  .team-card h4 { font-size: 0.95rem; margin-bottom: 0.15rem; }
+
+  .team-role {
+    font-size: 0.75rem;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  .team-card ul {
+    list-style: none;
+    text-align: left;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .team-card li::before {
+    content: "·";
+    color: var(--accent);
+    font-weight: 700;
+    margin-right: 0.4rem;
+  }
+
+  /* ===== TECH STACK ===== */
+  .tech-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tech-chip {
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.35rem 0.85rem;
+    border-radius: 100px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  /* ===== REFERENCES ===== */
+  .references {
+    padding-left: 1.25rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  .references li { margin-bottom: 0.5rem; }
+  .references em { color: var(--text); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    padding: 3rem 0;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-links { margin: 0.5rem 0; }
+
+  .footer-note {
+    margin-top: 1rem;
+    font-size: 0.7rem;
+    opacity: 0.6;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .two-col { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .pipeline { flex-direction: column; }
+    .pipe-arrow { transform: rotate(90deg); align-self: center; padding: 0; }
+    .model-grid { grid-template-columns: 1fr; }
+    .viz-grid { grid-template-columns: 1fr; }
+    .limits-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr; }
+    .hero { padding: 6rem 1.5rem 3rem; }
+    .section { padding: 3rem 0; }
+  }
+</style>
