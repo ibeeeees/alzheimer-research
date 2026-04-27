@@ -356,6 +356,10 @@ features = librosa.power_to_db(
 
 optimizer = Adam(model.parameters(), <span class="hl-val">lr=1e-3</span>)  <span class="hl-key"># ← tuned: 1e-2/1e-3/1e-4</span></pre>
       </div>
+      <div class="grid-heatmap-wrap">
+        <p class="grid-caption">Validation accuracy across dropout × learning rate combinations — green box marks chosen config.</p>
+        <img src={`${base}grid_cnn.png`} alt="CNN hyperparameter grid search heatmap" class="grid-heatmap-img" />
+      </div>
 
       <h3 class="sub-title">RNN — Architecture Search</h3>
       <div class="table-wrap">
@@ -406,6 +410,10 @@ optimizer = Adam(model.parameters(), <span class="hl-val">lr=1e-3</span>)  <span
         out, _ = self.gru(x.permute(0, 2, 1))
         return self.classifier(out[:, -1, :])</pre>
       </div>
+      <div class="grid-heatmap-wrap">
+        <p class="grid-caption">Validation accuracy across hidden size × num layers combinations — green box marks chosen config.</p>
+        <img src={`${base}grid_rnn.png`} alt="RNN hyperparameter grid search heatmap" class="grid-heatmap-img" />
+      </div>
 
       <h3 class="sub-title">SVM — Hyperparameter Search</h3>
       <div class="table-wrap">
@@ -451,6 +459,10 @@ svm = Pipeline([
 ])
 svm.fit(X_train.reshape(len(X_train), -1), y_train)</pre>
       </div>
+      <div class="grid-heatmap-wrap">
+        <p class="grid-caption">Validation accuracy across C × kernel combinations — green box marks chosen config.</p>
+        <img src={`${base}grid_svm.png`} alt="SVM hyperparameter grid search heatmap" class="grid-heatmap-img" />
+      </div>
 
       <h3 class="sub-title">Logistic Regression — Hyperparameter Search</h3>
       <div class="table-wrap">
@@ -495,6 +507,10 @@ logreg = Pipeline([
     ))
 ])
 logreg.fit(X_train.reshape(len(X_train), -1), y_train)</pre>
+      </div>
+      <div class="grid-heatmap-wrap">
+        <p class="grid-caption">Validation accuracy across C × penalty combinations — green box marks chosen config.</p>
+        <img src={`${base}grid_logreg.png`} alt="Logistic Regression hyperparameter grid search heatmap" class="grid-heatmap-img" />
       </div>
 
       <h3 class="sub-title">Feature Representation Comparison</h3>
@@ -860,6 +876,9 @@ python3 experiments/model_comparison.py</code></pre>
   .math-box p { max-width: none; margin: 0.2rem 0; }
 
   .code-snippet { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; margin: 0.75rem 0 1.5rem; overflow: hidden; }
+  .grid-heatmap-wrap { margin: 0.5rem 0 2rem; }
+  .grid-caption { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.5rem; font-style: italic; }
+  .grid-heatmap-img { width: 100%; max-width: 480px; border-radius: 8px; border: 1px solid var(--border); display: block; }
   .code-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); background: var(--accent-soft); padding: 0.35rem 1rem; margin: 0 !important; border-bottom: 1px solid var(--border); }
   .code-snippet pre { margin: 0; border-radius: 0; border: none; background: var(--bg); }
   .hl-val { background: rgba(250,200,50,0.18); color: #e8b84b; font-weight: 700; border-radius: 3px; padding: 0 2px; }
