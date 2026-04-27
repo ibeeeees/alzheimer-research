@@ -1,5 +1,9 @@
 ---
 import Base from "../layouts/Base.astro";
+
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
 ---
 
 <Base title="Alzheimer Detection from Speech">
@@ -141,7 +145,7 @@ TRAIN / VAL / TEST = 70% / 15% / 15%</code></pre>
           <h3>CNN</h3>
           <p class="model-detail">Convolutional Neural Network</p>
           <p><strong>Why chosen:</strong> A log-Mel spectrogram is structurally identical to a grayscale image. CNNs learn translation-invariant local feature detectors, making them ideal for capturing localized frequency-time patterns in speech regardless of where in the 10-second window they occur.</p>
-          <div class="math-box" is:raw>
+          <div class="math-box">
             <p class="math-label">Conv layer output:</p>
             <div class="math-display" is:raw>$$y_{i,j} = \sigma\!\left(\sum_{p,q} W_{p,q} \cdot x_{i+p,\, j+q} + b\right)$$</div>
             <p class="math-note">Three layers compress 128×313 → 64×156 → 32×78 → 16×39 via MaxPool. BatchNorm + Dropout(0.4) applied after each layer.</p>
@@ -160,7 +164,7 @@ TRAIN / VAL / TEST = 70% / 15% / 15%</code></pre>
           <h3>RNN (GRU)</h3>
           <p class="model-detail">Bidirectional Gated Recurrent Unit</p>
           <p><strong>Why chosen:</strong> Speech is fundamentally temporal. Alzheimer's-related pauses and disfluencies span the full utterance. A bidirectional GRU processes the spectrogram column-by-column (each column = one 32ms time frame), capturing long-range dependencies in both forward and reverse directions.</p>
-          <div class="math-box" is:raw>
+          <div class="math-box">
             <p class="math-label">GRU update equations:</p>
             <div class="math-display" is:raw>$$z_t = \sigma(W_z x_t + U_z h_{t-1})$$</div>
             <div class="math-display" is:raw>$$r_t = \sigma(W_r x_t + U_r h_{t-1})$$</div>
@@ -181,7 +185,7 @@ TRAIN / VAL / TEST = 70% / 15% / 15%</code></pre>
           <h3>SVM</h3>
           <p class="model-detail">Support Vector Machine (RBF kernel)</p>
           <p><strong>Why chosen:</strong> SVMs are well-known to perform strongly on <em>small, high-dimensional datasets</em> — exactly our regime (131 samples, 40,064-D features). The RBF kernel implicitly maps inputs to an infinite-dimensional feature space without computing it explicitly, and the convex optimization objective guarantees a unique global optimum.</p>
-          <div class="math-box" is:raw>
+          <div class="math-box">
             <p class="math-label">SVM dual objective &amp; RBF kernel:</p>
             <div class="math-display" is:raw>$$\max_\alpha \sum_i \alpha_i - \frac{1}{2}\sum_{i,j}\alpha_i\alpha_j y_i y_j K(x_i, x_j)$$</div>
             <div class="math-display" is:raw>$$K(x_i, x_j) = \exp\!\left(-\gamma \|x_i - x_j\|^2\right)$$</div>
@@ -200,7 +204,7 @@ TRAIN / VAL / TEST = 70% / 15% / 15%</code></pre>
           <h3>Logistic Regression</h3>
           <p class="model-detail">Regularized Linear Classifier (baseline)</p>
           <p><strong>Why chosen:</strong> Logistic Regression provides a linear performance floor — any model that can't beat it is not learning useful non-linear structure. It also provides interpretable feature weights, showing which spectrogram frequency bands are most diagnostic of Alzheimer's.</p>
-          <div class="math-box" is:raw>
+          <div class="math-box">
             <p class="math-label">Binary cross-entropy loss with L2 regularization:</p>
             <div class="math-display" is:raw>$$\mathcal{L}(w) = -\sum_i\!\Big[y_i \log \sigma(w^\top x_i) + (1-y_i)\log(1-\sigma(w^\top x_i))\Big] + \lambda\|w\|^2$$</div>
             <p class="math-note" is:raw>where $\sigma(z) = \frac{1}{1+e^{-z}}$ is the sigmoid function and $\lambda = 1/C$.</p>
@@ -349,22 +353,22 @@ TRAIN / VAL / TEST = 70% / 15% / 15%</code></pre>
         <h3 class="sub-title">Evaluation Metrics</h3>
         <p>We report four standard binary classification metrics. Let TP = true positive (AD correctly detected), TN = true negative (healthy correctly identified), FP = false positive (healthy misclassified as AD), FN = false negative (AD missed):</p>
         <div class="metric-formulas">
-          <div class="metric-formula-card" is:raw>
+          <div class="metric-formula-card">
             <p class="metric-name">Accuracy</p>
             <div class="math-display" is:raw>$$\text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}$$</div>
             <p class="metric-note">Overall fraction of correct predictions.</p>
           </div>
-          <div class="metric-formula-card" is:raw>
+          <div class="metric-formula-card">
             <p class="metric-name">Precision</p>
             <div class="math-display" is:raw>$$\text{Precision} = \frac{TP}{TP + FP}$$</div>
             <p class="metric-note">Of all AD predictions, how many are real AD cases.</p>
           </div>
-          <div class="metric-formula-card" is:raw>
+          <div class="metric-formula-card">
             <p class="metric-name">Recall (Sensitivity)</p>
             <div class="math-display" is:raw>$$\text{Recall} = \frac{TP}{TP + FN}$$</div>
             <p class="metric-note">Of all real AD cases, how many we detected. Critical for clinical screening.</p>
           </div>
-          <div class="metric-formula-card" is:raw>
+          <div class="metric-formula-card">
             <p class="metric-name">F1-Score</p>
             <div class="math-display" is:raw>$$F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}} = \frac{2\,TP}{2\,TP + FP + FN}$$</div>
             <p class="metric-note">Harmonic mean of precision and recall. Robust to class imbalance.</p>
@@ -420,19 +424,19 @@ TRAIN / VAL / TEST = 70% / 15% / 15%</code></pre>
       <h3 class="viz-title">Visualizations</h3>
       <div class="viz-grid">
         <figure>
-          <img src="/model_comparison_metrics.png" alt="Metrics comparison" loading="lazy" />
+          <img src={`${base}model_comparison_metrics.png`} alt="Metrics comparison" loading="lazy" />
           <figcaption>Metrics comparison across all models</figcaption>
         </figure>
         <figure>
-          <img src="/model_comparison_f1.png" alt="F1-score ranking" loading="lazy" />
+          <img src={`${base}model_comparison_f1.png`} alt="F1-score ranking" loading="lazy" />
           <figcaption>F1-score ranking</figcaption>
         </figure>
         <figure class="full-width">
-          <img src="/model_comparison_confusion.png" alt="Confusion matrices" loading="lazy" />
+          <img src={`${base}model_comparison_confusion.png`} alt="Confusion matrices" loading="lazy" />
           <figcaption>Confusion matrices for all 4 models</figcaption>
         </figure>
         <figure class="full-width">
-          <img src="/model_comparison_training.png" alt="Training curves" loading="lazy" />
+          <img src={`${base}model_comparison_training.png`} alt="Training curves" loading="lazy" />
           <figcaption>Training curves for CNN and RNN over 15 epochs</figcaption>
         </figure>
       </div>
