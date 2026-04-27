@@ -133,7 +133,7 @@ TRAIN / VAL / TEST = 70% / 15% / 15%</code></pre>
         <div class="feature-card">
           <div class="feature-badge mfcc">MFCC</div>
           <h4>Mel-Frequency Cepstral Coefficients</h4>
-          <img src={`${base}feat_mfcc.png`} alt="MFCC feature visualisation" class="feature-img" />
+          <img src={`${base}feat_mfcc.png`} alt="MFCC feature visualisation" class="feature-img lightbox-trigger" />
           <p>Compresses the log-Mel spectrum through a Discrete Cosine Transform (DCT), keeping only the first <code>n_mfcc=40</code> coefficients. Captures the overall <em>shape</em> of the spectrum — good for phoneme identity but discards fine-grained frequency detail needed for AD biomarkers.</p>
           <div class="feature-stat-row">
             <span class="fstat"><strong>Shape:</strong> 40 × 313</span>
@@ -153,7 +153,7 @@ TRAIN / VAL / TEST = 70% / 15% / 15%</code></pre>
         <div class="feature-card">
           <div class="feature-badge mel">Mel Spec</div>
           <h4>Mel Spectrogram</h4>
-          <img src={`${base}feat_mel.png`} alt="Mel spectrogram visualisation" class="feature-img" />
+          <img src={`${base}feat_mel.png`} alt="Mel spectrogram visualisation" class="feature-img lightbox-trigger" />
           <p>Applies <code>n_mels=128</code> triangular filter banks spaced on the Mel scale to the STFT power spectrum. Preserves full frequency resolution but energy values span many orders of magnitude — makes learning harder as very loud and very quiet events dominate.</p>
           <div class="feature-stat-row">
             <span class="fstat"><strong>Shape:</strong> 128 × 313</span>
@@ -173,7 +173,7 @@ TRAIN / VAL / TEST = 70% / 15% / 15%</code></pre>
         <div class="feature-card feature-card--best">
           <div class="feature-badge logmel">Log-Mel ✓ Best</div>
           <h4>Log-Mel Spectrogram</h4>
-          <img src={`${base}feat_logmel.png`} alt="Log-Mel spectrogram visualisation" class="feature-img" />
+          <img src={`${base}feat_logmel.png`} alt="Log-Mel spectrogram visualisation" class="feature-img lightbox-trigger" />
           <p>Same as Mel spectrogram but energy converted to decibels via <code>power_to_db</code>. The log scale compresses the huge dynamic range so quiet events — hesitations, pauses, disfluencies characteristic of AD — become as visible as loud speech. Best results across all models.</p>
           <div class="feature-stat-row">
             <span class="fstat"><strong>Shape:</strong> 128 × 313</span>
@@ -780,7 +780,7 @@ python3 experiments/model_comparison.py</code></pre>
       const el = img as HTMLImageElement;
       lbImg!.src = el.src;
       lbImg!.alt = el.alt;
-      lbCap!.textContent = el.closest('figure')?.querySelector('figcaption')?.textContent ?? '';
+      lbCap!.textContent = el.closest('figure')?.querySelector('figcaption')?.textContent ?? el.alt;
       lb!.classList.add('open');
       lb!.setAttribute('aria-hidden', 'false');
     });
