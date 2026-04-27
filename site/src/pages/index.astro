@@ -62,17 +62,14 @@ const base = import.meta.env.BASE_URL.endsWith("/")
       </p>
       <div class="card-row">
         <div class="card">
-          <div class="card-icon">&#127908;</div>
           <h3>The Task</h3>
           <p>Given a recording of a person describing the Cookie Theft picture, predict: healthy or Alzheimer.</p>
         </div>
         <div class="card">
-          <div class="card-icon">&#128202;</div>
           <h3>The Dataset</h3>
           <p>131 real audio recordings from Kaggle: 76 healthy controls, 55 Alzheimer patients.</p>
         </div>
         <div class="card">
-          <div class="card-icon">&#128300;</div>
           <h3>The Question</h3>
           <p>Which model architecture best captures acoustic differences on a small clinical dataset?</p>
         </div>
@@ -112,11 +109,11 @@ const base = import.meta.env.BASE_URL.endsWith("/")
           match human perception. The log scales energy in decibels. The result: a 128 × 313
           matrix that captures what frequencies are present and when.
         </p>
-        <p style="margin-top:0.75rem">The computation pipeline for each frame \(\tau\):</p>
+        <p style="margin-top:0.75rem">The computation pipeline for each frame $\tau$:</p>
         <div class="math-display" is:raw>$$S(\tau, \omega) = \left|\sum_{n=0}^{N-1} x(n + \tau H) \cdot w(n) \cdot e^{-j2\pi\omega n / N}\right|^2$$</div>
-        <p style="font-size:0.82rem;color:var(--text-muted)">Short-time Fourier transform (STFT) with window size \(N=1024\), hop length \(H=512\).</p>
+        <p style="font-size:0.82rem;color:var(--text-muted)">Short-time Fourier transform (STFT) with window size $N=1024$, hop length $H=512$.</p>
         <div class="math-display" is:raw>$$\text{LogMel}(\tau, k) = \log\!\left(\sum_{\omega} S(\tau, \omega) \cdot m_k(\omega) + \varepsilon\right)$$</div>
-        <p style="font-size:0.82rem;color:var(--text-muted)">\(m_k(\omega)\) is the \(k\)-th triangular Mel filter bank weight (\(k=1\ldots128\)), \(\varepsilon=10^{-9}\) prevents \(\log 0\). Each audio file produces a \(128 \times 313\) matrix at 16 kHz.</p>
+        <p is:raw style="font-size:0.82rem;color:var(--text-muted)">$m_k(\omega)$ is the $k$-th triangular Mel filter bank weight ($k = 1 \ldots 128$), $\varepsilon = 10^{-9}$ prevents $\log 0$. Each audio file produces a $128 \times 313$ matrix at 16 kHz.</p>
       </div>
       <div class="detail-box">
         <h4>Configuration (config.py)</h4>
@@ -461,7 +458,7 @@ TRAIN / VAL / TEST = 70% / 15% / 15%</code></pre>
           <span class="finding-num">3</span>
           <div>
             <h4>RNN misses half of AD patients — BPTT over 313 steps</h4>
-            <p>RNN had the worst recall (50.0%), classifying 4 of 8 AD patients as healthy. The root cause is two-fold: (1) <strong>Long-range gradient vanishing</strong> — even with GRU gating, BPTT over 313 time steps struggles to preserve gradients for features spread across the full utterance. The update gate $z_t$ that controls gradient flow was trained on only 91 samples, insufficient to learn robust long-range dependencies. (2) <strong>Class imbalance + threshold bias</strong> — the 58/42 healthy/AD split biases the model toward the majority class. A recall-optimized threshold (lowered below 0.5) recovered ~12pp recall at the cost of precision. In clinical screening, false negatives (missed AD) are far more dangerous than false alarms.</p>
+            <p is:raw>RNN had the worst recall (50.0%), classifying 4 of 8 AD patients as healthy. The root cause is two-fold: (1) <strong>Long-range gradient vanishing</strong> — even with GRU gating, BPTT over 313 time steps struggles to preserve gradients for features spread across the full utterance. The update gate $z_t$ that controls gradient flow was trained on only 91 samples, insufficient to learn robust long-range dependencies. (2) <strong>Class imbalance + threshold bias</strong> — the 58/42 healthy/AD split biases the model toward the majority class. A recall-optimized threshold (lowered below 0.5) recovered ~12pp recall at the cost of precision. In clinical screening, false negatives (missed AD) are far more dangerous than false alarms.</p>
           </div>
         </div>
         <div class="finding">
@@ -628,7 +625,6 @@ python3 experiments/model_comparison.py</code></pre>
 
   .card-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
   .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; }
-  .card-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
   .card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
   .card p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
 
