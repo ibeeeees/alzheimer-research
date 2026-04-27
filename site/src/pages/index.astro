@@ -615,21 +615,28 @@ logreg.fit(X_train.reshape(len(X_train), -1), y_train)</pre>
       <h3 class="viz-title">Visualizations</h3>
       <div class="viz-grid">
         <figure>
-          <img src={`${base}model_comparison_metrics.png`} alt="Metrics comparison" loading="lazy" />
+          <img src={`${base}model_comparison_metrics.png`} alt="Metrics comparison" loading="lazy" class="lightbox-trigger" />
           <figcaption>Metrics comparison across all models</figcaption>
         </figure>
         <figure>
-          <img src={`${base}model_comparison_f1.png`} alt="F1-score ranking" loading="lazy" />
+          <img src={`${base}model_comparison_f1.png`} alt="F1-score ranking" loading="lazy" class="lightbox-trigger" />
           <figcaption>F1-score ranking</figcaption>
         </figure>
         <figure class="full-width">
-          <img src={`${base}model_comparison_confusion.png`} alt="Confusion matrices" loading="lazy" />
+          <img src={`${base}model_comparison_confusion.png`} alt="Confusion matrices" loading="lazy" class="lightbox-trigger" />
           <figcaption>Confusion matrices for all 4 models</figcaption>
         </figure>
         <figure class="full-width">
-          <img src={`${base}model_comparison_training.png`} alt="Training curves" loading="lazy" />
+          <img src={`${base}model_comparison_training.png`} alt="Training curves" loading="lazy" class="lightbox-trigger" />
           <figcaption>Training curves for CNN and RNN over 15 epochs</figcaption>
         </figure>
+      </div>
+
+      <!-- Lightbox overlay -->
+      <div id="lightbox" aria-hidden="true">
+        <button id="lightbox-close" aria-label="Close">&times;</button>
+        <img id="lightbox-img" src="" alt="" />
+        <p id="lightbox-caption"></p>
       </div>
 
       <h3 class="findings-title">Key Findings</h3>
@@ -752,15 +759,6 @@ python3 experiments/model_comparison.py</code></pre>
       <p class="team-note">All members collaborated on experimental design and manuscript preparation.</p>
     </section>
 
-    <section class="container">
-      <h2>Citations</h2>
-      <ol class="references">
-        <li>Fraser, K. C., Meltzer, J. A., and Rudzicz, F. (2016). Linguistic features identify Alzheimer disease in narrative speech. Journal of Alzheimer Disease, 49, 407-422.</li>
-        <li>Becker, J. T. et al. (1994). The natural history of Alzheimer disease. Archives of Neurology, 51, 585-594.</li>
-        <li>Boller, F. and Becker, J. (2005). DementiaBank database guide. University of Pittsburgh.</li>
-      </ol>
-    </section>
-
   </main>
 
   <footer>
@@ -770,6 +768,33 @@ python3 experiments/model_comparison.py</code></pre>
   </footer>
 
 </Base>
+
+<script>
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightbox-img') as HTMLImageElement;
+  const lbCap = document.getElementById('lightbox-caption');
+  const lbClose = document.getElementById('lightbox-close');
+
+  document.querySelectorAll('.lightbox-trigger').forEach(img => {
+    img.addEventListener('click', () => {
+      const el = img as HTMLImageElement;
+      lbImg!.src = el.src;
+      lbImg!.alt = el.alt;
+      lbCap!.textContent = el.closest('figure')?.querySelector('figcaption')?.textContent ?? '';
+      lb!.classList.add('open');
+      lb!.setAttribute('aria-hidden', 'false');
+    });
+  });
+
+  lbClose?.addEventListener('click', close);
+  lb?.addEventListener('click', (e) => { if (e.target === lb) close(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+
+  function close() {
+    lb!.classList.remove('open');
+    lb!.setAttribute('aria-hidden', 'true');
+  }
+</script>
 
 <style>
   nav {
@@ -811,8 +836,8 @@ python3 experiments/model_comparison.py</code></pre>
   .btn-ghost:hover { border-color: var(--text-muted); color: var(--text); }
 
   .section-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.5rem; }
-  section h2 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1rem; }
-  section > p { color: var(--text-muted); margin-bottom: 1rem; max-width: 660px; }
+  section h2 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1rem; text-align: center; }
+  section > p { color: var(--text-muted); margin-bottom: 1rem; max-width: 660px; text-align: center; margin-left: auto; margin-right: auto; }
 
   .card-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
   .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; }
@@ -834,8 +859,10 @@ python3 experiments/model_comparison.py</code></pre>
     width: 100%; 
     box-sizing: border-box;
     padding: 0 2rem 3rem;
+    display: flex;
+    justify-content: center;
   }
-  .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; max-width: 960px; width: 100%; margin: 0 0 0 8rem; }
+  .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; max-width: 960px; width: 100%; margin: 0; }
   .feature-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.1rem; display: flex; flex-direction: column; }
   .feature-card--best { border-color: var(--green); box-shadow: 0 0 0 1px var(--green); }
   .feature-img { width: 100%; border-radius: 6px; margin: 0.5rem 0 0.65rem; display: block; border: 1px solid var(--border); }
@@ -901,6 +928,14 @@ python3 experiments/model_comparison.py</code></pre>
   .viz-grid figure.full-width { grid-column: 1 / -1; }
   .viz-grid img { width: 100%; display: block; border-radius: 0; }
   .viz-grid figcaption { padding: 0.75rem 1rem; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border); }
+  .lightbox-trigger { cursor: zoom-in; transition: opacity 0.15s; }
+  .lightbox-trigger:hover { opacity: 0.85; }
+  #lightbox { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); align-items: center; justify-content: center; flex-direction: column; padding: 2rem; }
+  #lightbox.open { display: flex; }
+  #lightbox-img { max-width: 90vw; max-height: 80vh; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 25px 60px rgba(0,0,0,0.6); }
+  #lightbox-caption { color: #a0aec0; font-size: 0.85rem; margin-top: 1rem; text-align: center; }
+  #lightbox-close { position: absolute; top: 1.25rem; right: 1.5rem; background: none; border: none; color: #e2e8f0; font-size: 2rem; cursor: pointer; line-height: 1; opacity: 0.7; }
+  #lightbox-close:hover { opacity: 1; }
 
   .findings { display: flex; flex-direction: column; gap: 1rem; }
   .finding { display: flex; gap: 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; }
