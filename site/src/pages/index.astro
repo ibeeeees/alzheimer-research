@@ -47,7 +47,6 @@ const base = import.meta.env.BASE_URL.endsWith("/")
   <main>
 
     <section id="problem" class="container">
-      <p class="section-label">Background</p>
       <h2>Why speech?</h2>
       <p>
         Clinical diagnosis of Alzheimer disease relies on costly cognitive
@@ -77,7 +76,6 @@ const base = import.meta.env.BASE_URL.endsWith("/")
     </section>
 
     <section id="method" class="container">
-      <p class="section-label">Methodology</p>
       <h2>How we processed the audio</h2>
       <p>Raw .wav files go through a four-stage preprocessing pipeline before being fed to any model.</p>
       <div class="pipeline">
@@ -197,7 +195,6 @@ features = librosa.power_to_db(
     </div>
 
     <section id="models" class="container container--wide">
-      <p class="section-label">Model Architectures</p>
       <h2>Four approaches, one dataset</h2>
       <p>
         We deliberately selected models across the complexity spectrum — from a linear baseline to deep
@@ -296,7 +293,6 @@ features = librosa.power_to_db(
 
     <!-- HYPERPARAMETER TUNING -->
     <section id="experiments" class="container">
-      <p class="section-label">Experimental Design</p>
       <h2>Hyperparameter tuning</h2>
       <p>
         We systematically varied key hyperparameters using a grid search to select the best configuration
@@ -541,7 +537,6 @@ logreg.fit(X_train.reshape(len(X_train), -1), y_train)</pre>
     </section>
 
     <section id="results" class="container">
-      <p class="section-label">Experimental Results</p>
       <h2>What we found</h2>
       <p>All four models were evaluated on the same held-out test set (20 samples, stratified).</p>
 
@@ -671,7 +666,6 @@ logreg.fit(X_train.reshape(len(X_train), -1), y_train)</pre>
     </section>
 
     <section id="how" class="container">
-      <p class="section-label">Implementation</p>
       <h2>How we built it</h2>
       <div class="detail-box">
         <h4>Tech Stack</h4>
@@ -697,7 +691,6 @@ python3 experiments/model_comparison.py</code></pre>
     </section>
 
     <section class="container">
-      <p class="section-label">Limitations and Future Work</p>
       <h2>What we would do differently</h2>
       <div class="limits-grid">
         <div class="limit-card">
@@ -720,7 +713,6 @@ python3 experiments/model_comparison.py</code></pre>
     </section>
 
     <section id="team" class="container">
-      <p class="section-label">Team</p>
       <h2>Who did what</h2>
       <div class="team-grid">
         <div class="team-card">
@@ -761,7 +753,6 @@ python3 experiments/model_comparison.py</code></pre>
     </section>
 
     <section class="container">
-      <p class="section-label">References</p>
       <h2>Citations</h2>
       <ol class="references">
         <li>Fraser, K. C., Meltzer, J. A., and Rudzicz, F. (2016). Linguistic features identify Alzheimer disease in narrative speech. Journal of Alzheimer Disease, 49, 407-422.</li>
