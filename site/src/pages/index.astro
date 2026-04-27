@@ -124,9 +124,79 @@ HOP_LENGTH     = 512
 FEATURE_TYPE   = "logmel"
 TRAIN / VAL / TEST = 70% / 15% / 15%</code></pre>
       </div>
+
+      <h3 class="sub-title">Feature representations we tested</h3>
+      <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:1.25rem">All three features are extracted from the same raw waveform using <code>librosa</code>. They differ in how much spectral detail they preserve and how they scale energy values.</p>
     </section>
 
-    <section id="models" class="container">
+    <!-- Feature grid — full viewport width, no container constraint -->
+    <div class="feature-section-full">
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-badge mfcc">MFCC</div>
+          <h4>Mel-Frequency Cepstral Coefficients</h4>
+          <img src={`${base}feat_mfcc.png`} alt="MFCC feature visualisation" class="feature-img" />
+          <p>Compresses the log-Mel spectrum through a Discrete Cosine Transform (DCT), keeping only the first <code>n_mfcc=40</code> coefficients. Captures the overall <em>shape</em> of the spectrum — good for phoneme identity but discards fine-grained frequency detail needed for AD biomarkers.</p>
+          <div class="feature-stat-row">
+            <span class="fstat"><strong>Shape:</strong> 40 × 313</span>
+            <span class="fstat"><strong>Size:</strong> 12,520 values</span>
+            <span class="fstat fstat-bad">Loses spectral detail</span>
+          </div>
+          <div class="code-snippet" style="margin-top:0.6rem">
+            <p class="code-label">data/features.py</p>
+            <pre>features = librosa.feature.mfcc(
+    y=audio, sr=sample_rate,
+    <span class="hl-val">n_mfcc=40</span>,      <span class="hl-key"># 40 DCT coefficients kept</span>
+    n_fft=1024, hop_length=512
+)</pre>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-badge mel">Mel Spec</div>
+          <h4>Mel Spectrogram</h4>
+          <img src={`${base}feat_mel.png`} alt="Mel spectrogram visualisation" class="feature-img" />
+          <p>Applies <code>n_mels=128</code> triangular filter banks spaced on the Mel scale to the STFT power spectrum. Preserves full frequency resolution but energy values span many orders of magnitude — makes learning harder as very loud and very quiet events dominate.</p>
+          <div class="feature-stat-row">
+            <span class="fstat"><strong>Shape:</strong> 128 × 313</span>
+            <span class="fstat"><strong>Size:</strong> 40,064 values</span>
+            <span class="fstat fstat-mid">Linear energy scale</span>
+          </div>
+          <div class="code-snippet" style="margin-top:0.6rem">
+            <p class="code-label">data/features.py</p>
+            <pre>features = librosa.feature.melspectrogram(
+    y=audio, sr=sample_rate,
+    <span class="hl-val">n_mels=128</span>,     <span class="hl-key"># 128 Mel filter banks</span>
+    n_fft=1024, hop_length=512
+)</pre>
+          </div>
+        </div>
+
+        <div class="feature-card feature-card--best">
+          <div class="feature-badge logmel">Log-Mel ✓ Best</div>
+          <h4>Log-Mel Spectrogram</h4>
+          <img src={`${base}feat_logmel.png`} alt="Log-Mel spectrogram visualisation" class="feature-img" />
+          <p>Same as Mel spectrogram but energy converted to decibels via <code>power_to_db</code>. The log scale compresses the huge dynamic range so quiet events — hesitations, pauses, disfluencies characteristic of AD — become as visible as loud speech. Best results across all models.</p>
+          <div class="feature-stat-row">
+            <span class="fstat"><strong>Shape:</strong> 128 × 313</span>
+            <span class="fstat"><strong>Size:</strong> 40,064 values</span>
+            <span class="fstat fstat-good">Best for all models</span>
+          </div>
+          <div class="code-snippet" style="margin-top:0.6rem">
+            <p class="code-label">data/features.py</p>
+            <pre>mel = librosa.feature.melspectrogram(
+    y=audio, sr=sample_rate,
+    n_mels=128, n_fft=1024, hop_length=512
+)
+features = librosa.power_to_db(
+    mel, <span class="hl-val">ref=np.max</span>  <span class="hl-key"># log scale, ref peak energy</span>
+)</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section id="models" class="container container--wide">
       <p class="section-label">Model Architectures</p>
       <h2>Four approaches, one dataset</h2>
       <p>
@@ -145,6 +215,10 @@ TRAIN / VAL / TEST = 70% / 15% / 15%</code></pre>
           <div class="math-box">
             <p class="math-label">Conv layer output:</p>
             <div class="math-display" is:raw>$$y_{i,j} = \sigma\!\left(\sum_{p,q} W_{p,q} \cdot x_{i+p,\, j+q} + b\right)$$</div>
+            <p class="math-label">MaxPool (2×2):</p>
+            <div class="math-display" is:raw>$$p_{i,j} = \max_{0 \le \delta_r, \delta_c < 2} y_{2i+\delta_r,\, 2j+\delta_c}$$</div>
+            <p class="math-label">BatchNorm:</p>
+            <div class="math-display" is:raw>$$\hat{x}_i = \frac{x_i - \mu_\mathcal{B}}{\sqrt{\sigma_\mathcal{B}^2 + \varepsilon}}$$</div>
             <p class="math-note">Three layers compress 128×313 → 64×156 → 32×78 → 16×39 via MaxPool. BatchNorm + Dropout(0.4) applied after each layer.</p>
           </div>
           <div class="model-specs">
@@ -174,7 +248,7 @@ TRAIN / VAL / TEST = 70% / 15% / 15%</code></pre>
             <span>Hidden 128</span>
             <span>Dropout 0.3</span>
           </div>
-          <p class="model-who">Implemented by <strong>Poorav</strong></p>
+          <p class="model-who">Implemented by <strong>Ibe</strong> &amp; <strong>Poorav</strong></p>
         </div>
 
         <div class="model-card">
@@ -186,6 +260,9 @@ TRAIN / VAL / TEST = 70% / 15% / 15%</code></pre>
             <p class="math-label">SVM dual objective &amp; RBF kernel:</p>
             <div class="math-display" is:raw>$$\max_\alpha \sum_i \alpha_i - \frac{1}{2}\sum_{i,j}\alpha_i\alpha_j y_i y_j K(x_i, x_j)$$</div>
             <div class="math-display" is:raw>$$K(x_i, x_j) = \exp\!\left(-\gamma \|x_i - x_j\|^2\right)$$</div>
+            <p class="math-label">Decision function:</p>
+            <div class="math-display" is:raw>$$f(x) = \text{sign}\!\left(\sum_i \alpha_i y_i K(x_i, x) + b\right)$$</div>
+            <p class="math-note" is:raw>Subject to $0 \le \alpha_i \le C$ and $\sum_i \alpha_i y_i = 0$. Only support vectors ($\alpha_i > 0$) define the boundary.</p>
           </div>
           <div class="model-specs">
             <span>RBF kernel</span>
@@ -255,6 +332,30 @@ TRAIN / VAL / TEST = 70% / 15% / 15%</code></pre>
           </tbody>
         </table>
       </div>
+      <div class="code-snippet">
+        <p class="code-label">Best CNN config (models/cnn.py)</p>
+        <pre>class CNN(nn.Module):
+    def __init__(self, <span class="hl-val">dropout=0.4</span>):        <span class="hl-key"># ← tuned: 0.2/0.4/0.5</span>
+        super().__init__()
+        self.block1 = nn.Sequential(
+            nn.Conv2d(1, <span class="hl-val">32</span>, kernel_size=3, padding=1),
+            nn.BatchNorm2d(<span class="hl-val">32</span>), nn.ReLU(),
+            nn.MaxPool2d(2), nn.Dropout2d(dropout)
+        )
+        self.block2 = nn.Sequential(
+            nn.Conv2d(<span class="hl-val">32</span>, <span class="hl-val">64</span>, kernel_size=3, padding=1),
+            nn.BatchNorm2d(<span class="hl-val">64</span>), nn.ReLU(),    <span class="hl-key"># ← tuned: 16/32/64, 32/64/128, 64/128/256</span>
+            nn.MaxPool2d(2), nn.Dropout2d(dropout)
+        )
+        self.block3 = nn.Sequential(
+            nn.Conv2d(<span class="hl-val">64</span>, <span class="hl-val">128</span>, kernel_size=3, padding=1),
+            nn.BatchNorm2d(<span class="hl-val">128</span>), nn.ReLU(),
+            nn.MaxPool2d(2), nn.Dropout2d(dropout)
+        )
+        self.classifier = nn.Linear(128 * 16 * 39, 2)
+
+optimizer = Adam(model.parameters(), <span class="hl-val">lr=1e-3</span>)  <span class="hl-key"># ← tuned: 1e-2/1e-3/1e-4</span></pre>
+      </div>
 
       <h3 class="sub-title">RNN — Architecture Search</h3>
       <div class="table-wrap">
@@ -284,6 +385,27 @@ TRAIN / VAL / TEST = 70% / 15% / 15%</code></pre>
           </tbody>
         </table>
       </div>
+      <div class="code-snippet">
+        <p class="code-label">Best RNN config (models/rnn.py)</p>
+        <pre>class RNN(nn.Module):
+    def __init__(self, input_size=128,
+                 <span class="hl-val">hidden=128</span>,          <span class="hl-key"># ← tuned: 64/128/256</span>
+                 <span class="hl-val">num_layers=2</span>,        <span class="hl-key"># ← tuned: 1/2/3</span>
+                 <span class="hl-val">dropout=0.3</span>):        <span class="hl-key"># ← tuned: 0.1/0.3/0.5</span>
+        super().__init__()
+        self.gru = nn.GRU(
+            input_size, hidden,
+            num_layers=num_layers,
+            batch_first=True,
+            bidirectional=True,
+            dropout=dropout
+        )
+        self.classifier = nn.Linear(hidden * 2, 2)
+
+    def forward(self, x):
+        out, _ = self.gru(x.permute(0, 2, 1))
+        return self.classifier(out[:, -1, :])</pre>
+      </div>
 
       <h3 class="sub-title">SVM — Hyperparameter Search</h3>
       <div class="table-wrap">
@@ -312,6 +434,67 @@ TRAIN / VAL / TEST = 70% / 15% / 15%</code></pre>
             </tr>
           </tbody>
         </table>
+      </div>
+      <div class="code-snippet">
+        <p class="code-label">Best SVM config (models/sklearn_models.py)</p>
+        <pre>from sklearn.svm import SVC
+from sklearn.pipeline import Pipeline
+
+svm = Pipeline([
+    ("scaler", StandardScaler()),
+    ("svc", SVC(
+        <span class="hl-val">kernel="rbf"</span>,       <span class="hl-key"># ← tuned: linear/rbf/poly</span>
+        <span class="hl-val">C=1.0</span>,             <span class="hl-key"># ← tuned: 0.1/1.0/10.0</span>
+        <span class="hl-val">gamma="scale"</span>,     <span class="hl-key"># ← tuned: scale/auto/0.001</span>
+        probability=True
+    ))
+])
+svm.fit(X_train.reshape(len(X_train), -1), y_train)</pre>
+      </div>
+
+      <h3 class="sub-title">Logistic Regression — Hyperparameter Search</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Parameter</th><th>Value 1</th><th>Value 2</th><th>Value 3</th><th>Best</th><th>Observation</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Regularization C</td>
+              <td><code>0.01</code></td><td><code>0.1</code></td><td><code>1.0</code></td>
+              <td><strong>1.0</strong></td>
+              <td>Weaker regularization (C=1) performed best; data not highly collinear</td>
+            </tr>
+            <tr>
+              <td>Max iterations</td>
+              <td><code>100</code></td><td><code>500</code></td><td><code>1000</code></td>
+              <td><strong>1000</strong></td>
+              <td>lbfgs solver needed 1000 iters to converge on 40,064-D input</td>
+            </tr>
+            <tr>
+              <td>Penalty</td>
+              <td><code>l1</code></td><td><code>l2</code></td><td><code>none</code></td>
+              <td><strong>l2</strong></td>
+              <td>L1 (Lasso) produced sparser weights but lower accuracy; L2 more stable</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="code-snippet">
+        <p class="code-label">Best LogReg config (models/sklearn_models.py)</p>
+        <pre>from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline
+
+logreg = Pipeline([
+    ("scaler", StandardScaler()),
+    ("clf", LogisticRegression(
+        <span class="hl-val">C=1.0</span>,             <span class="hl-key"># ← tuned: 0.01/0.1/1.0</span>
+        <span class="hl-val">penalty="l2"</span>,      <span class="hl-key"># ← tuned: l1/l2/none</span>
+        <span class="hl-val">max_iter=1000</span>,    <span class="hl-key"># ← tuned: 100/500/1000</span>
+        solver="lbfgs"
+    ))
+])
+logreg.fit(X_train.reshape(len(X_train), -1), y_train)</pre>
       </div>
 
       <h3 class="sub-title">Feature Representation Comparison</h3>
@@ -604,6 +787,7 @@ python3 experiments/model_comparison.py</code></pre>
   .nav-links a:hover { color: var(--text); text-decoration: none; }
 
   .container { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem; }
+  .container--wide { max-width: 1100px; }
   section { padding: 5rem 1.5rem; border-bottom: 1px solid var(--border); }
 
   .hero { padding: 6rem 1.5rem 5rem; border-bottom: 1px solid var(--border); text-align: center; }
@@ -639,20 +823,47 @@ python3 experiments/model_comparison.py</code></pre>
   .detail-box h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem; }
   .detail-box p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.65; max-width: none; }
 
-  .model-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 2rem; }
-  .model-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; display: flex; flex-direction: column; }
-  .model-tag { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.2rem 0.6rem; border-radius: 4px; width: fit-content; margin-bottom: 0.75rem; }
+  .feature-section-full { 
+    width: 100%; 
+    box-sizing: border-box;
+    padding: 0 2rem 3rem;
+  }
+  .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; max-width: 960px; width: 100%; margin: 0 0 0 8rem; }
+  .feature-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.1rem; display: flex; flex-direction: column; }
+  .feature-card--best { border-color: var(--green); box-shadow: 0 0 0 1px var(--green); }
+  .feature-img { width: 100%; border-radius: 6px; margin: 0.5rem 0 0.65rem; display: block; border: 1px solid var(--border); }
+  .feature-badge { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.15rem 0.55rem; border-radius: 4px; width: fit-content; margin-bottom: 0.5rem; }
+  .feature-badge.mfcc { background: rgba(99,179,237,0.12); color: #63b3ed; }
+  .feature-badge.mel  { background: rgba(154,117,234,0.12); color: #9a75ea; }
+  .feature-badge.logmel { background: var(--green-soft); color: var(--green); }
+  .feature-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .feature-card > p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.55; max-width: none; margin-bottom: 0.5rem; }
+  .feature-stat-row { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.4rem 0 0; }
+  .fstat { font-size: 0.72rem; font-family: var(--mono); background: var(--bg); border: 1px solid var(--border); padding: 0.15rem 0.45rem; border-radius: 4px; color: var(--text-muted); }
+  .fstat-good { border-color: var(--green); color: var(--green); background: var(--green-soft); }
+  .fstat-mid  { border-color: #9a75ea; color: #9a75ea; background: rgba(154,117,234,0.08); }
+  .fstat-bad  { border-color: #e07b7b; color: #e07b7b; background: rgba(224,123,123,0.08); }
+
+  .model-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; margin-top: 2rem; max-width: 1100px; margin-left: auto; margin-right: auto; }
+  .model-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; display: flex; flex-direction: column; }
+  .model-tag { font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.15rem 0.5rem; border-radius: 4px; width: fit-content; margin-bottom: 0.5rem; }
   .model-tag.deep { background: var(--accent-soft); color: var(--accent); }
   .model-tag.classical { background: var(--green-soft); color: var(--green); }
-  .model-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.15rem; }
-  .model-detail { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem; }
-  .model-card > p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; max-width: none; }
-  .model-specs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; margin-bottom: 0.75rem; }
-  .model-specs span { font-family: var(--mono); font-size: 0.75rem; background: var(--bg); border: 1px solid var(--border); padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--text-muted); }
-  .model-who { font-size: 0.8rem; color: var(--text-muted); margin: 0; }
+  .model-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.1rem; }
+  .model-detail { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+  .model-card > p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.55; max-width: none; margin-bottom: 0; }
+  .model-specs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; margin-bottom: 0.5rem; }
+  .model-specs span { font-family: var(--mono); font-size: 0.72rem; background: var(--bg); border: 1px solid var(--border); padding: 0.15rem 0.45rem; border-radius: 4px; color: var(--text-muted); }
+  .model-who { font-size: 0.75rem; color: var(--text-muted); margin: 0; }
 
-  .math-box { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin: 0.75rem 0; font-size: 0.85rem; overflow-x: auto; }
-  .math-box p { max-width: none; margin: 0.3rem 0; }
+  .math-box { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.65rem 0.85rem; margin: 0.6rem 0; font-size: 0.82rem; overflow-x: auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .math-box p { max-width: none; margin: 0.2rem 0; }
+
+  .code-snippet { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; margin: 0.75rem 0 1.5rem; overflow: hidden; }
+  .code-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); background: var(--accent-soft); padding: 0.35rem 1rem; margin: 0 !important; border-bottom: 1px solid var(--border); }
+  .code-snippet pre { margin: 0; border-radius: 0; border: none; background: var(--bg); }
+  .hl-val { background: rgba(250,200,50,0.18); color: #e8b84b; font-weight: 700; border-radius: 3px; padding: 0 2px; }
+  .hl-key { background: rgba(99,179,237,0.13); color: #63b3ed; font-weight: 700; border-radius: 3px; padding: 0 2px; }
   .math-display { overflow-x: auto; text-align: center; padding: 0.5rem 0; margin: 0.3rem 0; }
   .math-label { font-size: 0.75rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem !important; }
   .math-note { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; margin-top: 0.4rem !important; }
@@ -713,6 +924,8 @@ python3 experiments/model_comparison.py</code></pre>
   @media (max-width: 700px) {
     .nav-links { display: none; }
     .model-grid { grid-template-columns: 1fr; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .feature-section-full { padding: 0 1rem 2rem; }
     .viz-grid { grid-template-columns: 1fr; }
     .limits-grid { grid-template-columns: 1fr; }
     .team-grid { grid-template-columns: 1fr; }
